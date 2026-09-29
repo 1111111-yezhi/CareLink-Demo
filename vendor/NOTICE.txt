@@ -1,0 +1,5 @@
+本目录为 Demo 的离线依赖资源，随原型一并分发，无需单独获取：
+  tailwindcss.js        Tailwind CSS 运行时（MIT）
+  iconify-icon.min.js   Iconify 图标组件 1.0.7（MIT）
+  icons-mdi.js          本原型用到的 69 个 MDI 图标数据（MIT）
+  echarts.min.js        Apache ECharts（Apache-2.0）

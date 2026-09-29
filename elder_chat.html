@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html class="w-full h-full overflow-hidden" lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>康伴 CareLink · 老人陪伴端 | 日常陪伴</title>
+<script src="vendor/tailwindcss.js"></script>
+<script src="vendor/icons-mdi.js"></script>
+<script src="vendor/iconify-icon.min.js"></script>
+<style>
+  :root{
+    --brand:#E4611A;--brand2:#FF8A3D;--brandtint:#FFF2E8;
+    --teal:#0E9F8E;--ink:#14202E;--ink2:#48586C;--ink3:#8492A6;
+    --line:#E7EBF1;--bg:#F4F6FA;--danger:#D92D20;--dangertint:#FDECEA;
+  }
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .no-scrollbar{scrollbar-width:none;-ms-overflow-style:none;}
+  .no-scrollbar::-webkit-scrollbar{width:0;height:0;display:none;}
+  .tabbtn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;flex:1;min-height:56px;color:var(--ink3);text-decoration:none;}
+  .tabbtn iconify-icon{font-size:26px;}
+  .tabbtn.on{color:var(--brand);}
+  .tabbtn span{font-size:12px;font-weight:700;}
+  .saychip{display:inline-flex;align-items:center;gap:6px;min-height:48px;padding:0 14px;border-radius:999px;background:#fff;border:1px solid #FFDDBF;color:#B4551A;font-size:16px;font-weight:700;white-space:nowrap;}
+  .note{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:#EEF1F6;color:#48586C;font-size:13px;font-weight:700;}
+</style>
+</head>
+<body class="w-full h-full m-0 overflow-hidden flex items-center justify-center bg-[#E9EDF3]">
+<div class="w-full h-full max-w-[393px] max-h-[852px] bg-[#F4F6FA] flex flex-col overflow-hidden relative shadow-[0_0_60px_rgba(15,23,42,.18)]">
+<header class="shrink-0 bg-gradient-to-br from-[#E4611A] to-[#FF9A4D] text-white">
+<div class="h-9 px-4 flex items-center justify-between text-[13px] text-white/90">
+<span class="font-semibold">08:20</span>
+<div class="flex items-center gap-2">
+<iconify-icon icon="mdi:wifi"></iconify-icon>
+<iconify-icon icon="mdi:battery-70"></iconify-icon>
+</div>
+</div>
+<div class="px-3 pb-3 pt-1 flex items-center gap-2">
+<a aria-label="返回首页" class="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center" href="elder_home.html">
+<iconify-icon class="text-[24px]" icon="mdi:arrow-left"></iconify-icon>
+</a>
+<div class="flex-1">
+<p class="text-[20px] font-extrabold leading-tight">康伴 · 语音陪伴</p>
+<p class="text-[13px] text-white/90">已唤醒 · 正在听您说话</p>
+</div>
+<span class="px-2.5 py-1.5 rounded-full bg-white/20 text-[13px] font-bold flex items-center gap-1">
+<iconify-icon class="text-[10px]" icon="mdi:circle"></iconify-icon>在线
+      </span>
+</div>
+</header>
+<div class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden no-scrollbar px-4 py-4 space-y-4" id="chatScroll">
+<p class="text-center text-[13px] text-[#8492A6]">今天 08:18 · 唤醒词「康伴康伴」已生效</p>
+<div class="space-y-4" id="flow">
+<div class="flex gap-2.5">
+<div class="w-10 h-10 shrink-0 rounded-full bg-[#E4611A] text-white flex items-center justify-center">
+<iconify-icon class="text-[22px]" icon="mdi:heart-pulse"></iconify-icon>
+</div>
+<div class="max-w-[82%]">
+<div class="bg-white border border-[#E7EBF1] rounded-[20px] rounded-tl-[6px] px-4 py-3 text-[18px] leading-8">
+            李奶奶早上好！我在呢。今天天气不错，早上血压也测过了，这会儿想聊点什么？
+          </div>
+<span class="note mt-2"><iconify-icon class="text-[15px]" icon="mdi:account-heart"></iconify-icon>陪伴智能体 · 主动问候</span>
+</div>
+</div>
+<div class="flex justify-end">
+<div class="max-w-[80%] bg-[#E4611A] text-white rounded-[20px] rounded-br-[6px] px-4 py-3 text-[18px] font-semibold leading-8">
+          康伴康伴
+        </div>
+</div>
+</div>
+<div class="pt-1">
+<p class="text-[14px] font-bold text-[#8492A6] mb-2 px-1">您可以直接说（点一下也行）</p>
+<div class="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+<button class="saychip say" data-key="我今天血压怎么样？"><iconify-icon class="text-[18px]" icon="mdi:heart-pulse"></iconify-icon>我今天血压怎么样？</button>
+<button class="saychip say" data-key="我该吃药了吗？"><iconify-icon class="text-[18px]" icon="mdi:pill"></iconify-icon>我该吃药了吗？</button>
+<button class="saychip say" data-key="我想儿子了"><iconify-icon class="text-[18px]" icon="mdi:account-heart-outline"></iconify-icon>我想儿子了</button>
+<button class="saychip say" data-key="给我放段戏吧"><iconify-icon class="text-[18px]" icon="mdi:music-note"></iconify-icon>给我放段戏吧</button>
+</div>
+</div>
+</div>
+<div class="shrink-0 bg-white border-t border-[#E7EBF1] px-3 py-2 flex items-center gap-2">
+<div class="flex-1 min-h-[56px] rounded-2xl bg-[#F4F6FA] border border-[#E7EBF1] flex items-center px-4 text-[16px] text-[#8492A6]">
+      也可以在这儿打字…
+    </div>
+<button class="w-[76px] h-[56px] rounded-2xl bg-[#E4611A] text-white flex items-center justify-center gap-1 font-extrabold text-[15px] shadow-[0_6px_18px_rgba(228,97,26,.32)] active:scale-[.98] transition" id="micBtn">
+<iconify-icon class="text-[24px]" icon="mdi:microphone" id="micIcon"></iconify-icon>说话
+    </button>
+</div>
+<div class="shrink-0 px-4 pt-2 pb-2 bg-white border-t border-[#E7EBF1]">
+<a class="flex items-center justify-center gap-3 w-full min-h-[56px] rounded-2xl bg-[#D92D20] text-white font-extrabold text-[19px] shadow-[0_6px_18px_rgba(217,45,32,.32)] active:scale-[.98] transition" href="elder_sos.html">
+<iconify-icon class="text-[24px]" icon="mdi:alert-octagon"></iconify-icon>紧急求助
+    </a>
+</div>
+<nav class="shrink-0 bg-white border-t border-[#E7EBF1] flex items-stretch px-1">
+<a class="tabbtn" href="elder_home.html">
+<iconify-icon icon="mdi:home-variant"></iconify-icon><span>首页</span>
+</a>
+<a class="tabbtn on" href="elder_chat.html">
+<iconify-icon icon="mdi:microphone"></iconify-icon><span>陪伴</span>
+</a>
+<a class="tabbtn" href="elder_health.html">
+<iconify-icon icon="mdi:heart-pulse"></iconify-icon><span>健康</span>
+</a>
+<a class="tabbtn" href="elder_medication.html">
+<iconify-icon icon="mdi:pill"></iconify-icon><span>用药</span>
+</a>
+<a class="tabbtn" href="elder_contact.html">
+<iconify-icon icon="mdi:account-group"></iconify-icon><span>家人</span>
+</a>
+</nav>
+</div>
+<script>
+  var flow = document.getElementById('flow');
+  var chatScroll = document.getElementById('chatScroll');
+  var micBtn = document.getElementById('micBtn');
+  var micIcon = document.getElementById('micIcon');
+  var busy = false;
+
+  var replies = {
+    '我今天血压怎么样？': {
+      agent: '健康监测智能体',
+      note: '意图识别：健康查询 · 已调度健康监测智能体',
+      text: '好，我看看您今天的数据。早上 7 点半量的血压是 128 比 78，很正常，比上周还稳一点；心率 72 下，血氧 97%，都挺好。记得别吃太咸，下午出去溜达 20 分钟。',
+      link: { label: '看详细报告', href: 'elder_health.html' }
+    },
+    '我该吃药了吗？': {
+      agent: '用药管理智能体',
+      note: '意图识别：用药咨询 · 已调度用药管理智能体',
+      text: '早上的降压药您 8 点 02 分已经吃过了，真棒。中午 12 点半还要吃 1 片二甲双胍，是饭后吃的，到点我会喊您。',
+      link: { label: '看今天的药', href: 'elder_medication.html' }
+    },
+    '我想儿子了': {
+      agent: '陪伴智能体',
+      note: '意图识别：思念家人 · 陪伴智能体共情回应并转接家人联系',
+      text: '想孩子了是应该的，小明昨天还问我您这两天睡得好不好呢。要不我这就帮您拨过去，说两句话他就放心了。',
+      link: { label: '给小明打视频', href: 'elder_contact.html' }
+    },
+    '给我放段戏吧': {
+      agent: '陪伴智能体',
+      note: '意图识别：休闲陪伴 · 已调用曲艺内容库',
+      text: '好嘞，这就给您放《穆桂英挂帅》选段，音量给您调到 60，要是嫌大您说一声「小一点」。',
+      link: { label: '陪我说说话', href: 'elder_chat.html' }
+    }
+  };
+
+  function scrollBottom() {
+    chatScroll.scrollTop = chatScroll.scrollHeight;
+  }
+
+  function addUserBubble(text) {
+    var row = document.createElement('div');
+    row.className = 'flex justify-end';
+    var b = document.createElement('div');
+    b.className = 'max-w-[80%] bg-[#E4611A] text-white rounded-[20px] rounded-br-[6px] px-4 py-3 text-[18px] font-semibold leading-8';
+    b.textContent = text;
+    row.appendChild(b);
+    flow.appendChild(row);
+    scrollBottom();
+  }
+
+  function addAgentBubble(data) {
+    var row = document.createElement('div');
+    row.className = 'flex gap-2.5';
+
+    var avatar = document.createElement('div');
+    avatar.className = 'w-10 h-10 shrink-0 rounded-full bg-[#E4611A] text-white flex items-center justify-center';
+    avatar.innerHTML = '<iconify-icon icon="mdi:robot-happy-outline" class="text-[22px]"></iconify-icon>';
+
+    var col = document.createElement('div');
+    col.className = 'max-w-[82%] space-y-2';
+
+    var bubble = document.createElement('div');
+    bubble.className = 'bg-white border border-[#E7EBF1] rounded-[20px] rounded-tl-[6px] px-4 py-3 text-[18px] leading-8';
+    bubble.textContent = data.text;
+    col.appendChild(bubble);
+
+    var note = document.createElement('span');
+    note.className = 'note';
+    note.textContent = data.note;
+    col.appendChild(note);
+
+    if (data.link) {
+      var link = document.createElement('a');
+      link.href = data.link.href;
+      link.className = 'inline-flex items-center gap-1.5 min-h-[48px] px-4 rounded-2xl bg-[#FFF2E8] text-[#B4551A] text-[16px] font-extrabold';
+      link.textContent = data.link.label;
+      col.appendChild(link);
+    }
+
+    row.appendChild(avatar);
+    row.appendChild(col);
+    flow.appendChild(row);
+    scrollBottom();
+  }
+
+  function ask(key) {
+    if (busy) { return; }
+    busy = true;
+    addUserBubble(key);
+
+    var thinking = document.createElement('div');
+    thinking.className = 'flex gap-2.5';
+    thinking.innerHTML = '<div class="w-10 h-10 shrink-0 rounded-full bg-[#E4611A] text-white flex items-center justify-center">'
+      + '<iconify-icon icon="mdi:robot-happy-outline" class="text-[22px]"></iconify-icon></div>'
+      + '<span class="note">安排智能体处理中…</span>';
+    flow.appendChild(thinking);
+    scrollBottom();
+
+    window.setTimeout(function () {
+      thinking.remove();
+      addAgentBubble(replies[key]);
+      busy = false;
+    }, 1100);
+  }
+
+  var sayButtons = document.querySelectorAll('.say');
+  for (var i = 0; i < sayButtons.length; i++) {
+    sayButtons[i].addEventListener('click', function () {
+      ask(this.getAttribute('data-key'));
+    });
+  }
+
+  micBtn.addEventListener('click', function () {
+    if (busy) { return; }
+    micBtn.classList.add('opacity-70');
+    micIcon.setAttribute('icon', 'mdi:waveform');
+    micBtn.lastChild.textContent = '听着';
+    window.setTimeout(function () {
+      micIcon.setAttribute('icon', 'mdi:microphone');
+      micBtn.lastChild.textContent = '说话';
+      micBtn.classList.remove('opacity-70');
+      ask('我想儿子了');
+    }, 900);
+  });
+</script>
+</body>
+</html>

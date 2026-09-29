@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html class="w-full h-full overflow-hidden" lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>康伴 CareLink · 家属监护端 | 远程关怀</title>
+<script src="vendor/tailwindcss.js"></script>
+<script src="vendor/icons-mdi.js"></script>
+<script src="vendor/iconify-icon.min.js"></script>
+<style>
+  :root{
+    --brand:#E4611A;--teal:#0E9F8E;--ink:#14202E;--ink2:#48586C;--ink3:#8492A6;
+    --line:#E7EBF1;--bg:#F4F6FA;--danger:#D92D20;--dangertint:#FDECEA;
+  }
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .no-scrollbar{scrollbar-width:none;-ms-overflow-style:none;}
+  .no-scrollbar::-webkit-scrollbar{width:0;height:0;display:none;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 4px 14px rgba(20,32,46,.05);}
+  .tabbtn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;flex:1;min-height:56px;color:var(--ink3);text-decoration:none;}
+  .tabbtn iconify-icon{font-size:25px;}
+  .tabbtn.on{color:var(--teal);}
+  .tabbtn span{font-size:12px;font-weight:700;}
+  .chip{min-height:44px;padding:0 14px;border-radius:999px;background:#F4F6FA;border:1px solid #E7EBF1;font-size:13px;font-weight:700;color:#48586C;}
+  .field{width:100%;min-height:48px;border-radius:14px;border:1px solid #E7EBF1;background:#F9FAFC;padding:0 14px;font-size:15px;color:#14202E;}
+  .label{font-size:13px;font-weight:800;color:#48586C;}
+</style>
+</head>
+<body class="w-full h-full m-0 overflow-hidden flex items-center justify-center bg-[#E9EDF3]">
+<div class="w-full h-full max-w-[393px] max-h-[852px] bg-[#F4F6FA] flex flex-col overflow-hidden relative shadow-[0_0_60px_rgba(15,23,42,.18)]">
+<header class="shrink-0 bg-gradient-to-br from-[#0B7C70] to-[#12B8A6] text-white">
+<div class="h-9 px-4 flex items-center justify-between text-[12px] text-white/90">
+<span class="font-semibold">08:20</span>
+<div class="flex items-center gap-2">
+<iconify-icon icon="mdi:wifi"></iconify-icon>
+<iconify-icon icon="mdi:battery-80"></iconify-icon>
+</div>
+</div>
+<div class="px-3 pb-4 pt-1 flex items-center gap-2">
+<a aria-label="返回家属端首页" class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center" href="family_home.html">
+<iconify-icon class="text-[22px]" icon="mdi:arrow-left"></iconify-icon>
+</a>
+<div class="flex-1">
+<p class="text-[19px] font-extrabold leading-tight">远程关怀</p>
+<p class="text-[12px] text-white/90">语音问候 · 提醒事项 · 关怀记录</p>
+</div>
+</div>
+</header>
+<main class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden no-scrollbar px-4 py-4 space-y-4">
+<section class="card p-4">
+<h2 class="text-[16px] font-extrabold flex items-center gap-2">
+<iconify-icon class="text-[20px] text-[#0E9F8E]" icon="mdi:microphone-message"></iconify-icon>给妈妈发一段语音
+      </h2>
+<p class="mt-1 text-[13px] text-[#8492A6]">语音会由陪伴智能体用妈妈熟悉的音色播放，并同时震动提示。</p>
+<div class="mt-3 flex flex-wrap gap-2">
+<button class="chip say">妈，天凉了记得加件外套</button>
+<button class="chip say">今天血压挺好，继续保持</button>
+<button class="chip say">晚上八点我打视频给您</button>
+</div>
+<textarea class="mt-3 w-full rounded-2xl border border-[#E7EBF1] bg-[#F9FAFC] p-3 text-[14px] leading-6 outline-none" id="voiceText" placeholder="或者写一句话，让康伴念给妈妈听…" rows="2"></textarea>
+<div class="mt-2 flex items-center gap-2">
+<button class="flex-1 min-h-[52px] rounded-2xl bg-[#F4F6FA] text-[#14202E] text-[15px] font-extrabold flex items-center justify-center gap-2" id="recordBtn">
+<iconify-icon class="text-[22px] text-[#D92D20]" icon="mdi:record"></iconify-icon>按住录音
+        </button>
+<button class="flex-1 min-h-[52px] rounded-2xl bg-[#0E9F8E] text-white text-[15px] font-extrabold" id="sendBtn">发送问候</button>
+</div>
+<p class="hidden mt-2 rounded-2xl bg-[#E6F6F3] px-3 py-2.5 text-[13px] font-bold text-[#0B7C70]" id="voiceState"></p>
+</section>
+<section class="card p-4">
+<h2 class="text-[16px] font-extrabold flex items-center gap-2">
+<iconify-icon class="text-[20px] text-[#0E9F8E]" icon="mdi:calendar-plus"></iconify-icon>设置提醒事项
+      </h2>
+<p class="mt-1 text-[13px] text-[#8492A6]">到点后由系统自动语音播报 + 药盒震动 + 大屏弹窗，无需老人操作。</p>
+<form class="mt-3 space-y-3" id="remindForm">
+<div>
+<label class="label" for="remindWhat">提醒内容</label>
+<input class="field mt-1" id="remindWhat" type="text" value="10:00 量一次血压"/>
+</div>
+<div class="flex gap-3">
+<div class="flex-1">
+<label class="label" for="remindTime">提醒时间</label>
+<input class="field mt-1" id="remindTime" type="time" value="10:00"/>
+</div>
+<div class="flex-1">
+<label class="label" for="remindRepeat">重复</label>
+<select class="field mt-1" id="remindRepeat">
+<option>每天</option>
+<option>工作日</option>
+<option>仅今天</option>
+<option>每周一次</option>
+</select>
+</div>
+</div>
+<label class="flex items-center gap-3 min-h-[48px] rounded-2xl bg-[#F9FAFC] border border-[#E7EBF1] px-3">
+<input checked="" class="w-5 h-5" id="voiceSwitch" type="checkbox"/>
+<span class="text-[14px] font-bold">开启语音播报与震动提示</span>
+</label>
+<button class="w-full min-h-[52px] rounded-2xl bg-[#14202E] text-white text-[16px] font-extrabold" type="submit">保存并下发到妈妈端</button>
+</form>
+<p class="hidden mt-2 rounded-2xl bg-[#E6F6F3] px-3 py-2.5 text-[13px] font-bold text-[#0B7C70]" id="formState"></p>
+</section>
+<section class="card p-4">
+<h2 class="text-[16px] font-extrabold">近期关怀记录</h2>
+<ul class="mt-3 space-y-2 text-[14px]" id="careList">
+<li class="rounded-2xl bg-[#F4F6FA] px-3 py-3">
+<div class="flex items-center justify-between"><span class="font-extrabold">语音问候 · 天凉了记得加外套</span><span class="text-[12px] font-extrabold text-[#0E9F8E]">已收听</span></div>
+<p class="mt-1 text-[12px] text-[#8492A6]">昨天 19:40 发送 · 19:42 妈妈播放并回复“知道啦”</p>
+</li>
+<li class="rounded-2xl bg-[#F4F6FA] px-3 py-3">
+<div class="flex items-center justify-between"><span class="font-extrabold">提醒 · 10:00 量一次血压</span><span class="text-[12px] font-extrabold text-[#0E9F8E]">已执行</span></div>
+<p class="mt-1 text-[12px] text-[#8492A6]">9 月 28 日创建 · 已连续执行 2 天</p>
+</li>
+<li class="rounded-2xl bg-[#F4F6FA] px-3 py-3">
+<div class="flex items-center justify-between"><span class="font-extrabold">视频通话</span><span class="text-[12px] font-extrabold text-[#8492A6]">8 分 42 秒</span></div>
+<p class="mt-1 text-[12px] text-[#8492A6]">9 月 26 日 15:30 · 陪伴智能体记录情绪：愉快</p>
+</li>
+</ul>
+<a class="mt-3 block text-center text-[13px] font-extrabold text-[#0E9F8E] min-h-[40px] leading-[40px]" href="family_history.html">查看完整关怀与事件记录 →</a>
+</section>
+</main>
+<nav class="shrink-0 bg-white border-t border-[#E7EBF1] flex items-stretch px-1">
+<a class="tabbtn" href="family_home.html">
+<iconify-icon icon="mdi:view-dashboard"></iconify-icon><span>首页</span>
+</a>
+<a class="tabbtn" href="family_alert.html">
+<iconify-icon icon="mdi:bell-alert"></iconify-icon><span>预警</span>
+</a>
+<a class="tabbtn" href="family_history.html">
+<iconify-icon icon="mdi:history"></iconify-icon><span>历史</span>
+</a>
+<a class="tabbtn on" href="family_care.html">
+<iconify-icon icon="mdi:hand-heart"></iconify-icon><span>关怀</span>
+</a>
+</nav>
+</div>
+<script>
+  var voiceText = document.getElementById('voiceText');
+  var voiceState = document.getElementById('voiceState');
+  var recordBtn = document.getElementById('recordBtn');
+  var recording = false;
+  var recordTimer = null;
+
+  var chips = document.querySelectorAll('.say');
+  for (var i = 0; i < chips.length; i++) {
+    chips[i].addEventListener('click', function () {
+      voiceText.value = this.textContent;
+      voiceState.classList.remove('hidden');
+      voiceState.textContent = '已填入问候语，点「发送问候」即可发给妈妈。';
+    });
+  }
+
+  recordBtn.addEventListener('click', function () {
+    recording = !recording;
+    if (recording) {
+      recordBtn.innerHTML = '<iconify-icon icon="mdi:stop" class="text-[22px] text-[#D92D20]"></iconify-icon>正在录音 0:03';
+      voiceState.classList.remove('hidden');
+      voiceState.textContent = '正在录音，妈妈那边会收到震动提示。';
+    } else {
+      window.clearTimeout(recordTimer);
+      recordBtn.innerHTML = '<iconify-icon icon="mdi:record" class="text-[22px] text-[#D92D20]"></iconify-icon>按住录音';
+      voiceState.textContent = '录音已保存为草稿，点「发送问候」发给妈妈。';
+    }
+  });
+
+  document.getElementById('sendBtn').addEventListener('click', function () {
+    voiceState.classList.remove('hidden');
+    voiceState.textContent = '问候已发送：陪伴智能体将在 1 分钟内用妈妈的音色播放，并记录收听状态。';
+  });
+
+  document.getElementById('remindForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var what = document.getElementById('remindWhat').value || '（未填写内容）';
+    var timeValue = document.getElementById('remindTime').value || '10:00';
+    var repeat = document.getElementById('remindRepeat').value;
+    var voiceOn = document.getElementById('voiceSwitch').checked;
+
+    var formState = document.getElementById('formState');
+    formState.classList.remove('hidden');
+    formState.textContent = '已下发到妈妈端：' + timeValue + ' ' + what + '（' + repeat + '，语音播报' + (voiceOn ? '已开启' : '已关闭') + '）';
+
+    var list = document.getElementById('careList');
+    var li = document.createElement('li');
+    li.className = 'rounded-2xl bg-[#FFF2E8] px-3 py-3';
+
+    var head = document.createElement('div');
+    head.className = 'flex items-center justify-between';
+    var title = document.createElement('span');
+    title.className = 'font-extrabold';
+    title.textContent = '提醒 · ' + what;
+    var badge = document.createElement('span');
+    badge.className = 'text-[12px] font-extrabold text-[#B4551A]';
+    badge.textContent = '刚下发';
+    head.appendChild(title);
+    head.appendChild(badge);
+
+    var desc = document.createElement('p');
+    desc.className = 'mt-1 text-[12px] text-[#8492A6]';
+    desc.textContent = '时间 ' + timeValue + ' · ' + repeat + ' · 语音播报' + (voiceOn ? '开' : '关') + ' · 由系统自动执行';
+
+    li.appendChild(head);
+    li.appendChild(desc);
+    list.insertBefore(li, list.firstChild);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html class="w-full h-full overflow-hidden" lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>康伴 CareLink · 老人陪伴端 | 紧急求助</title>
+<script src="vendor/tailwindcss.js"></script>
+<script src="vendor/icons-mdi.js"></script>
+<script src="vendor/iconify-icon.min.js"></script>
+<style>
+  :root{
+    --brand:#E4611A;--teal:#0E9F8E;--ink:#14202E;--ink2:#48586C;--ink3:#8492A6;
+    --line:#E7EBF1;--bg:#F4F6FA;--danger:#D92D20;--dangertint:#FDECEA;
+  }
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .no-scrollbar{scrollbar-width:none;-ms-overflow-style:none;}
+  .no-scrollbar::-webkit-scrollbar{width:0;height:0;display:none;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 4px 14px rgba(20,32,46,.05);}
+  .tabbtn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;flex:1;min-height:56px;color:var(--ink3);text-decoration:none;}
+  .tabbtn iconify-icon{font-size:26px;}
+  .tabbtn.on{color:var(--danger);}
+  .tabbtn span{font-size:12px;font-weight:700;}
+  .pulse{animation:pulse 1.6s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(217,45,32,.45)}50%{box-shadow:0 0 0 16px rgba(217,45,32,0)}}
+</style>
+</head>
+<body class="w-full h-full m-0 overflow-hidden flex items-center justify-center bg-[#E9EDF3]">
+<div class="w-full h-full max-w-[393px] max-h-[852px] bg-[#FDF3F2] flex flex-col overflow-hidden relative shadow-[0_0_60px_rgba(15,23,42,.18)]">
+<header class="shrink-0 bg-gradient-to-br from-[#C4231A] to-[#E4483B] text-white">
+<div class="h-9 px-4 flex items-center justify-between text-[13px] text-white/90">
+<span class="font-semibold">08:20</span>
+<div class="flex items-center gap-2">
+<iconify-icon icon="mdi:wifi"></iconify-icon>
+<iconify-icon icon="mdi:battery-70"></iconify-icon>
+</div>
+</div>
+<div class="px-3 pb-4 pt-1 flex items-center gap-2">
+<a aria-label="返回首页" class="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center" href="elder_home.html">
+<iconify-icon class="text-[24px]" icon="mdi:arrow-left"></iconify-icon>
+</a>
+<div class="flex-1">
+<p class="text-[20px] font-extrabold leading-tight">紧急求助</p>
+<p class="text-[13px] text-white/90">喊「救命」或者按一下红按钮都行</p>
+</div>
+</div>
+</header>
+<main class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden no-scrollbar px-4 py-4 space-y-4">
+<section class="space-y-4" id="idlePanel">
+<div class="card p-5 text-center">
+<button class="pulse w-[190px] h-[190px] mx-auto rounded-full bg-[#D92D20] text-white flex flex-col items-center justify-center gap-1 active:scale-[.97] transition" id="sosBtn">
+<iconify-icon class="text-[52px]" icon="mdi:alert-octagon"></iconify-icon>
+<span class="text-[30px] font-extrabold leading-none">求 助</span>
+<span class="text-[15px] text-white/90">按这里就行</span>
+</button>
+<p class="mt-4 text-[19px] font-extrabold">或者大声喊一句「救命」</p>
+<p class="mt-1 text-[16px] text-[#48586C] leading-7">不用解锁、不用点开，我会马上听见，立刻叫家人。</p>
+</div>
+<div class="card p-4">
+<h2 class="text-[18px] font-extrabold">平时我在盯着这些</h2>
+<ul class="mt-2 space-y-2 text-[16px] text-[#48586C]">
+<li class="flex items-center gap-3 rounded-2xl bg-[#F4F6FA] px-3 py-3">
+<iconify-icon class="text-[22px] text-[#D92D20]" icon="mdi:volume-high"></iconify-icon>语音关键词：救命、摔了、不舒服
+          </li>
+<li class="flex items-center gap-3 rounded-2xl bg-[#F4F6FA] px-3 py-3">
+<iconify-icon class="text-[22px] text-[#D92D20]" icon="mdi:account-alert"></iconify-icon>跌倒检测：手环感知突然摔倒
+          </li>
+<li class="flex items-center gap-3 rounded-2xl bg-[#F4F6FA] px-3 py-3">
+<iconify-icon class="text-[22px] text-[#D92D20]" icon="mdi:heart-off"></iconify-icon>体征异常：心率、血压超出安全线
+          </li>
+</ul>
+</div>
+</section>
+<section class="hidden space-y-4" id="activePanel">
+<div class="rounded-[22px] bg-[#D92D20] text-white p-4">
+<div class="flex items-center gap-2">
+<iconify-icon class="text-[28px]" icon="mdi:shield-alert"></iconify-icon>
+<p class="text-[21px] font-extrabold">一级响应已启动</p>
+</div>
+<p class="mt-2 text-[16px] leading-7 text-white/95">紧急预警智能体已接管。康伴会一直陪着您说话，家人和医生已经收到通知。</p>
+<div class="mt-3 grid grid-cols-2 gap-2 text-[13px] font-bold">
+<span class="rounded-xl bg-white/20 px-3 py-2">启动时间 08:21:07</span>
+<span class="rounded-xl bg-white/20 px-3 py-2">响应等级 一级</span>
+</div>
+</div>
+<div class="card p-4">
+<h2 class="text-[18px] font-extrabold">已经帮您做的</h2>
+<ul class="mt-2 space-y-2">
+<li class="flex items-center gap-3 rounded-2xl bg-[#E6F6F3] px-3 py-3 text-[16px]">
+<iconify-icon class="text-[22px] text-[#0E9F8E]" icon="mdi:check-circle"></iconify-icon>拨通儿子 李小明 的电话，已接通
+          </li>
+<li class="flex items-center gap-3 rounded-2xl bg-[#E6F6F3] px-3 py-3 text-[16px]">
+<iconify-icon class="text-[22px] text-[#0E9F8E]" icon="mdi:check-circle"></iconify-icon>给女儿发送短信 + APP 推送
+          </li>
+<li class="flex items-center gap-3 rounded-2xl bg-[#E6F6F3] px-3 py-3 text-[16px]">
+<iconify-icon class="text-[22px] text-[#0E9F8E]" icon="mdi:check-circle"></iconify-icon>把您的位置发给家里人
+          </li>
+<li class="flex items-center gap-3 rounded-2xl bg-[#FFF6E6] px-3 py-3 text-[16px]">
+<iconify-icon class="text-[22px] text-[#B54708]" icon="mdi:progress-clock"></iconify-icon>社区医生 王医生 2 分钟内联系您
+          </li>
+</ul>
+</div>
+<div class="card p-4">
+<h2 class="text-[18px] font-extrabold flex items-center gap-2">
+<iconify-icon class="text-[22px] text-[#D92D20]" icon="mdi:map-marker"></iconify-icon>您现在的位置
+        </h2>
+<div class="mt-3 rounded-2xl bg-[#EAF1F8] border border-[#D5E2EF] p-3">
+<div class="h-24 rounded-xl bg-[repeating-linear-gradient(45deg,#DDE8F4_0_10px,#EAF1F8_10px_20px)] flex items-center justify-center">
+<span class="px-3 py-1.5 rounded-full bg-[#D92D20] text-white text-[14px] font-extrabold">李奶奶在这里</span>
+</div>
+<p class="mt-2 text-[16px] font-bold">朝阳区幸福里小区 3 号楼 2 单元 501</p>
+<p class="text-[14px] text-[#8492A6]">定位精度约 8 米 · 2026-09-29 08:21 上传</p>
+</div>
+</div>
+<div class="card p-4">
+<h2 class="text-[18px] font-extrabold">此刻的体征</h2>
+<div class="mt-3 grid grid-cols-3 gap-2 text-center">
+<div class="rounded-2xl bg-[#FDECEA] py-3">
+<p class="text-[26px] font-extrabold text-[#D92D20]">96</p>
+<p class="text-[13px] font-bold text-[#8A4038]">心率 次/分</p>
+</div>
+<div class="rounded-2xl bg-[#F4F6FA] py-3">
+<p class="text-[26px] font-extrabold">132</p>
+<p class="text-[13px] font-bold text-[#8492A6]">收缩压 mmHg</p>
+</div>
+<div class="rounded-2xl bg-[#F4F6FA] py-3">
+<p class="text-[26px] font-extrabold">96</p>
+<p class="text-[13px] font-bold text-[#8492A6]">血氧 %</p>
+</div>
+</div>
+<p class="mt-2 text-[15px] text-[#48586C] leading-7">心率比平时快一些，手环持续上传中，医生能看到。</p>
+</div>
+<div class="card p-4">
+<h2 class="text-[18px] font-extrabold">三级应急响应</h2>
+<div class="mt-3 space-y-2">
+<div class="flex items-start gap-3 rounded-2xl border border-[#F3C9C4] bg-[#FDECEA] px-3 py-3">
+<span class="w-8 h-8 shrink-0 rounded-full bg-[#D92D20] text-white font-extrabold flex items-center justify-center">1</span>
+<div class="text-[15px]"><p class="font-extrabold text-[#B42318]">一级 · 本人 + 家属（进行中）</p><p class="text-[#8A4038] mt-0.5">语音安抚 + 电话/短信/APP 三重通知</p></div>
+</div>
+<div class="flex items-start gap-3 rounded-2xl border border-[#E7EBF1] px-3 py-3">
+<span class="w-8 h-8 shrink-0 rounded-full bg-[#B54708] text-white font-extrabold flex items-center justify-center">2</span>
+<div class="text-[15px]"><p class="font-extrabold text-[#8A4B08]">二级 · 社区医生 / 网格员（已就绪）</p><p class="text-[#8492A6] mt-0.5">5 分钟内未解除，医生上门查看</p></div>
+</div>
+<div class="flex items-start gap-3 rounded-2xl border border-[#E7EBF1] px-3 py-3">
+<span class="w-8 h-8 shrink-0 rounded-full bg-[#48586C] text-white font-extrabold flex items-center justify-center">3</span>
+<div class="text-[15px]"><p class="font-extrabold">三级 · 120 急救（待医生判断）</p><p class="text-[#8492A6] mt-0.5">同步体征与定位至急救中心</p></div>
+</div>
+</div>
+</div>
+<button class="w-full min-h-[56px] rounded-2xl bg-white border border-[#E7EBF1] text-[18px] font-extrabold text-[#48586C]" id="cancelBtn">
+        我没事，取消求助
+      </button>
+</section>
+<p class="text-center text-[14px] text-[#8492A6] pb-1" id="idleHint">紧急求助按钮在任何页面都能看到</p>
+</main>
+<div class="shrink-0 px-4 pt-2 pb-2 bg-white border-t border-[#E7EBF1]">
+<button class="flex items-center justify-center gap-3 w-full min-h-[56px] rounded-2xl bg-[#D92D20] text-white font-extrabold text-[19px] shadow-[0_6px_18px_rgba(217,45,32,.32)] active:scale-[.98] transition" id="barBtn">
+<iconify-icon class="text-[24px]" icon="mdi:alert-octagon"></iconify-icon>紧急求助
+    </button>
+</div>
+<nav class="shrink-0 bg-white border-t border-[#E7EBF1] flex items-stretch px-1">
+<a class="tabbtn" href="elder_home.html">
+<iconify-icon icon="mdi:home-variant"></iconify-icon><span>首页</span>
+</a>
+<a class="tabbtn" href="elder_chat.html">
+<iconify-icon icon="mdi:microphone"></iconify-icon><span>陪伴</span>
+</a>
+<a class="tabbtn" href="elder_health.html">
+<iconify-icon icon="mdi:heart-pulse"></iconify-icon><span>健康</span>
+</a>
+<a class="tabbtn" href="elder_medication.html">
+<iconify-icon icon="mdi:pill"></iconify-icon><span>用药</span>
+</a>
+<a class="tabbtn" href="elder_contact.html">
+<iconify-icon icon="mdi:account-group"></iconify-icon><span>家人</span>
+</a>
+</nav>
+</div>
+<script>
+  var idlePanel = document.getElementById('idlePanel');
+  var activePanel = document.getElementById('activePanel');
+  var idleHint = document.getElementById('idleHint');
+  var mainBox = document.querySelector('main');
+
+  function triggerSos() {
+    if (!idlePanel.classList.contains('hidden')) {
+      idlePanel.classList.add('hidden');
+      activePanel.classList.remove('hidden');
+      idleHint.textContent = '响应中 · 请留在原地，家人正在赶来';
+      mainBox.scrollTop = 0;
+    }
+  }
+
+  function cancelSos() {
+    activePanel.classList.add('hidden');
+    idlePanel.classList.remove('hidden');
+    idleHint.textContent = '紧急求助按钮在任何页面都能看到';
+    mainBox.scrollTop = 0;
+  }
+
+  document.getElementById('sosBtn').addEventListener('click', triggerSos);
+  document.getElementById('barBtn').addEventListener('click', triggerSos);
+  document.getElementById('cancelBtn').addEventListener('click', cancelSos);
+</script>
+</body>
+</html>

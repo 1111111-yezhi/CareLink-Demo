@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html class="w-full h-full overflow-hidden" lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>康伴 CareLink · 多智能体协同可视化演示</title>
+<script src="vendor/tailwindcss.js"></script>
+<script src="vendor/icons-mdi.js"></script>
+<script src="vendor/iconify-icon.min.js"></script>
+<style>
+  :root{
+    --brand:#E4611A;--teal:#0E9F8E;--ink:#14202E;--ink2:#48586C;--ink3:#8492A6;
+    --line:#E7EBF1;--bg:#F4F6FA;--danger:#D92D20;--dangertint:#FDECEA;
+  }
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .no-scrollbar{scrollbar-width:none;-ms-overflow-style:none;}
+  .no-scrollbar::-webkit-scrollbar{width:0;height:0;display:none;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 4px 14px rgba(20,32,46,.05);}
+  .scene{min-height:52px;border-radius:14px;font-size:12px;font-weight:800;background:rgba(255,255,255,.14);color:rgba(255,255,255,.78);border:1px solid transparent;padding:6px 4px;line-height:1.3;}
+  .scene.on{background:#fff;color:#14202E;box-shadow:0 4px 12px rgba(0,0,0,.18);}
+  .pl-node{position:relative;background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 12px;transition:all .25s;}
+  .pl-node .no{width:22px;height:22px;border-radius:999px;background:#EEF1F6;color:#48586C;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+  .pl-node.is-active{border-color:#FFB27A;background:#FFFBF7;box-shadow:0 6px 18px rgba(228,97,26,.14);}
+  .pl-node.is-done{border-color:#BFE7E1;background:#F4FCFA;}
+  .tag{display:inline-flex;align-items:center;margin-top:6px;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:800;}
+  .tag-idle{background:#F4F6FA;color:#8492A6;}
+  .tag-active{background:#FFF2E8;color:#B4551A;}
+  .tag-done{background:#E6F6F3;color:#0E9F8E;}
+  .tag-skip{background:#F4F6FA;color:#8492A6;}
+  .tabbtn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;flex:1;min-height:56px;color:var(--ink3);text-decoration:none;}
+  .tabbtn iconify-icon{font-size:24px;}
+  .tabbtn.on{color:var(--brand);}
+  .tabbtn span{font-size:12px;font-weight:700;}
+  .bar{height:10px;border-radius:999px;background:#EDF0F5;overflow:hidden;}
+  .bar > i{display:block;height:100%;border-radius:999px;transition:width .4s;}
+</style>
+</head>
+<body class="w-full h-full m-0 overflow-hidden flex items-center justify-center bg-[#E9EDF3]">
+<div class="w-full h-full max-w-[393px] max-h-[852px] bg-[#F4F6FA] flex flex-col overflow-hidden relative shadow-[0_0_60px_rgba(15,23,42,.18)]">
+<header class="shrink-0 bg-gradient-to-br from-[#14202E] to-[#2C3E52] text-white">
+<div class="h-9 px-4 flex items-center justify-between text-[12px] text-white/85">
+<span class="font-semibold">08:20</span>
+<div class="flex items-center gap-2">
+<a aria-label="返回原型导览" class="w-7 h-7 rounded-full bg-white/15 flex items-center justify-center" href="index.html">
+<iconify-icon class="text-[15px]" icon="mdi:view-grid-outline"></iconify-icon>
+</a>
+<iconify-icon icon="mdi:wifi"></iconify-icon>
+<iconify-icon icon="mdi:battery-80"></iconify-icon>
+</div>
+</div>
+<div class="px-4 pb-3 pt-1">
+<p class="text-[19px] font-extrabold leading-tight flex items-center gap-2">
+<iconify-icon class="text-[22px] text-[#FFB27A]" icon="mdi:transit-connection-variant"></iconify-icon>
+        多智能体协同可视化
+      </p>
+<p class="mt-1 text-[12px] text-white/75">1 个编排智能体 + 5 个专业智能体 · 意图分解 → 调度 → 结果融合</p>
+</div>
+<div class="px-4 pb-4 grid grid-cols-4 gap-2">
+<button class="scene on" data-key="dizzy">头晕<br/>不适</button>
+<button class="scene" data-key="med">用药<br/>咨询</button>
+<button class="scene" data-key="fall">跌倒<br/>告警</button>
+<button class="scene" data-key="miss">思念<br/>家人</button>
+</div>
+</header>
+<main class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden no-scrollbar px-4 py-4 space-y-4">
+<section class="card p-4">
+<div class="flex items-center justify-between">
+<h2 class="text-[17px] font-extrabold" id="sceneTitle">场景：头晕不适</h2>
+<span class="px-2.5 py-1 rounded-full bg-[#FFF6E6] text-[#B54708] text-[11px] font-extrabold" id="sceneLevel">二级关注</span>
+</div>
+<p class="mt-2 rounded-2xl bg-[#F4F6FA] px-3 py-2.5 text-[13px] leading-6 text-[#48586C]" id="sceneIntent">
+        触发语句：“康伴康伴，我有点头晕，站不稳。”
+      </p>
+</section>
+<section class="rounded-[16px] bg-gradient-to-br from-[#14202E] to-[#2C3E52] text-white p-4">
+<div class="flex items-center gap-2">
+<iconify-icon class="text-[22px] text-[#FFB27A]" icon="mdi:hub"></iconify-icon>
+<p class="text-[15px] font-extrabold">编排智能体 · 意图分解</p>
+<span class="ml-auto px-2.5 py-1 rounded-full bg-white/15 text-[11px] font-extrabold" id="orcheState">待命</span>
+</div>
+<p class="mt-2 text-[13px] leading-6 text-white/85" id="decomposeText">
+        拆解为 3 个子任务：体征核查 → 风险分级 → 安抚与复测。
+      </p>
+<div class="mt-3 flex gap-2">
+<button class="flex-1 min-h-[48px] rounded-2xl bg-[#FF8A3D] text-[#14202E] text-[14px] font-extrabold" id="playBtn">播放调度过程</button>
+<button class="min-h-[48px] px-4 rounded-2xl bg-white/15 text-white text-[14px] font-extrabold" id="resetBtn">重置</button>
+</div>
+</section>
+<section>
+<div class="flex items-center justify-between px-1 mb-2">
+<h2 class="text-[15px] font-extrabold">专业智能体调用顺序</h2>
+<span class="text-[11px] font-bold text-[#8492A6]">按调度先后排列</span>
+</div>
+<ul class="space-y-2">
+<li class="pl-node" id="node0">
+<div class="flex items-center gap-2">
+<span class="no">1</span>
+<p class="text-[14px] font-extrabold" id="name0">健康监测智能体</p>
+<span class="ml-auto text-[11px] font-bold text-[#8492A6]" id="ms0">—</span>
+</div>
+<p class="mt-1 text-[12px] font-bold text-[#8492A6]" id="role0">体征核查</p>
+<p class="mt-1 text-[13px] leading-6 text-[#48586C]" id="out0">待命…</p>
+<p class="mt-1 text-[11px] font-semibold text-[#0E9F8E] hidden" id="src0"></p>
+<span class="tag tag-idle" id="st0">待命</span>
+</li>
+<li class="pl-node" id="node1">
+<div class="flex items-center gap-2">
+<span class="no">2</span>
+<p class="text-[14px] font-extrabold" id="name1">紧急预警智能体</p>
+<span class="ml-auto text-[11px] font-bold text-[#8492A6]" id="ms1">—</span>
+</div>
+<p class="mt-1 text-[12px] font-bold text-[#8492A6]" id="role1">风险分级</p>
+<p class="mt-1 text-[13px] leading-6 text-[#48586C]" id="out1">待命…</p>
+<p class="mt-1 text-[11px] font-semibold text-[#0E9F8E] hidden" id="src1"></p>
+<span class="tag tag-idle" id="st1">待命</span>
+</li>
+<li class="pl-node" id="node2">
+<div class="flex items-center gap-2">
+<span class="no">3</span>
+<p class="text-[14px] font-extrabold" id="name2">用药管理智能体</p>
+<span class="ml-auto text-[11px] font-bold text-[#8492A6]" id="ms2">—</span>
+</div>
+<p class="mt-1 text-[12px] font-bold text-[#8492A6]" id="role2">用药核对</p>
+<p class="mt-1 text-[13px] leading-6 text-[#48586C]" id="out2">待命…</p>
+<p class="mt-1 text-[11px] font-semibold text-[#0E9F8E] hidden" id="src2"></p>
+<span class="tag tag-idle" id="st2">待命</span>
+</li>
+<li class="pl-node" id="node3">
+<div class="flex items-center gap-2">
+<span class="no">4</span>
+<p class="text-[14px] font-extrabold" id="name3">陪伴智能体</p>
+<span class="ml-auto text-[11px] font-bold text-[#8492A6]" id="ms3">—</span>
+</div>
+<p class="mt-1 text-[12px] font-bold text-[#8492A6]" id="role3">安抚引导</p>
+<p class="mt-1 text-[13px] leading-6 text-[#48586C]" id="out3">待命…</p>
+<p class="mt-1 text-[11px] font-semibold text-[#0E9F8E] hidden" id="src3"></p>
+<span class="tag tag-idle" id="st3">待命</span>
+</li>
+<li class="pl-node" id="node4">
+<div class="flex items-center gap-2">
+<span class="no">5</span>
+<p class="text-[14px] font-extrabold" id="name4">家属联动智能体</p>
+<span class="ml-auto text-[11px] font-bold text-[#8492A6]" id="ms4">—</span>
+</div>
+<p class="mt-1 text-[12px] font-bold text-[#8492A6]" id="role4">家属同步</p>
+<p class="mt-1 text-[13px] leading-6 text-[#48586C]" id="out4">待命…</p>
+<p class="mt-1 text-[11px] font-semibold text-[#0E9F8E] hidden" id="src4"></p>
+<span class="tag tag-idle" id="st4">待命</span>
+</li>
+</ul>
+</section>
+<section class="card p-4" id="fusionCard">
+<h2 class="text-[15px] font-extrabold flex items-center gap-2">
+<iconify-icon class="text-[20px] text-[#E4611A]" icon="mdi:merge"></iconify-icon>结果融合
+      </h2>
+<p class="mt-2 text-[13px] leading-6 text-[#48586C]" id="fusionText">
+        疑似血压偏高引起头晕：先静坐休息，30 分钟后复测；若复测仍高于 150/95 则升级一级响应。
+      </p>
+<p class="mt-2 rounded-2xl bg-[#E6F6F3] px-3 py-2.5 text-[12px] font-bold leading-6 text-[#0B7C70]" id="outcomeText">
+        已完成 · 家属同步收到“妈妈血压偏高，已语音安抚”的推送。
+      </p>
+</section>
+<section class="card p-4">
+<div class="flex items-center justify-between">
+<h2 class="text-[15px] font-extrabold">场景完成度</h2>
+<span class="text-[15px] font-extrabold text-[#0E9F8E]" id="pctText">100%</span>
+</div>
+<div class="bar mt-2"><i id="pctBar" style="width:100%;background:#0E9F8E"></i></div>
+<p class="mt-2 text-[12px] leading-6 text-[#8492A6]" id="pctNote">
+        端到端链路已跑通，包含意图分解、5 个专业智能体调度与结果融合。
+      </p>
+</section>
+<section class="card p-4">
+<h2 class="text-[15px] font-extrabold">三级应急响应与外部联动</h2>
+<p class="mt-1.5 text-[12px] leading-6 text-[#8492A6]" id="levelNote">本场景当前响应等级：二级关注，不升级紧急响应。</p>
+<div class="mt-3 space-y-2">
+<div class="flex items-start gap-3 rounded-2xl border border-[#E7EBF1] px-3 py-2.5" id="lv1">
+<span class="w-7 h-7 shrink-0 rounded-full bg-[#48586C] text-white text-[12px] font-extrabold flex items-center justify-center">1</span>
+<div class="text-[13px] leading-6"><p class="font-extrabold">一级响应 · 本人 + 家属</p><p class="text-[#8492A6]">紧急预警智能体接管，语音安抚 + 电话/短信/APP 三重通知</p></div>
+</div>
+<div class="flex items-start gap-3 rounded-2xl border border-[#E7EBF1] px-3 py-2.5" id="lv2">
+<span class="w-7 h-7 shrink-0 rounded-full bg-[#B54708] text-white text-[12px] font-extrabold flex items-center justify-center">2</span>
+<div class="text-[13px] leading-6"><p class="font-extrabold">二级响应 · 社区医生 / 网格员</p><p class="text-[#8492A6]">5 分钟未解除则联动签约医生上门核查</p></div>
+</div>
+<div class="flex items-start gap-3 rounded-2xl border border-[#E7EBF1] px-3 py-2.5" id="lv3">
+<span class="w-7 h-7 shrink-0 rounded-full bg-[#B42318] text-white text-[12px] font-extrabold flex items-center justify-center">3</span>
+<div class="text-[13px] leading-6"><p class="font-extrabold">三级响应 · 120 急救 / 医院</p><p class="text-[#8492A6]">同步体征与定位至急救中心（接口完善中）</p></div>
+</div>
+</div>
+</section>
+</main>
+<nav class="shrink-0 bg-white border-t border-[#E7EBF1] flex items-stretch px-1">
+<a class="tabbtn" href="index.html">
+<iconify-icon icon="mdi:view-grid-outline"></iconify-icon><span>导览</span>
+</a>
+<a class="tabbtn" href="elder_home.html">
+<iconify-icon icon="mdi:human-cane"></iconify-icon><span>老人端</span>
+</a>
+<a class="tabbtn" href="family_home.html">
+<iconify-icon icon="mdi:cellphone-screenshot"></iconify-icon><span>家属端</span>
+</a>
+<a class="tabbtn on" href="agent_demo.html">
+<iconify-icon icon="mdi:transit-connection-variant"></iconify-icon><span>智能体</span>
+</a>
+</nav>
+</div>
+<script>
+  var SCENARIOS = {
+    dizzy: {
+      title: '场景：头晕不适',
+      level: '二级关注',
+      levelStyle: { bg: '#FFF6E6', color: '#B54708' },
+      intent: '触发语句：“康伴康伴，我有点头晕，站不稳。”',
+      decompose: '拆解为 3 个子任务：体征核查 → 风险分级 → 安抚与复测，允许 5 个专业智能体并行。',
+      steps: [
+        { name: '健康监测智能体', role: '体征核查', out: '近 6 小时血压 152/94 偏高，心率 88，血氧 96%；已创建 30 分钟后复测提醒。', ms: '420 ms', src: '依据：《中国高血压防治指南（2024 年修订版）》' },
+        { name: '紧急预警智能体', role: '风险分级', out: '判定二级关注，暂不升级一级，持续跟踪 10 分钟。', ms: '210 ms', src: '依据：团队风险分级规则库（规则引擎，不经大模型）' },
+        { name: '用药管理智能体', role: '用药核对', out: '早间降压药已服用，午间用药未到点，无重复用药。', ms: '180 ms', src: '依据：药品说明书 ·《中国老年人潜在不适当用药目录》' },
+        { name: '陪伴智能体', role: '安抚引导', out: '语音安抚并引导老人坐下休息，等待复测。', ms: '260 ms', src: '共情话术库 · 不涉及医学结论' },
+        { name: '家属联动智能体', role: '家属同步', out: '已将血压偏高与复测安排同步至家属端，附体征与建议。', ms: '120 ms' }
+      ],
+      fusion: '疑似血压偏高引起头晕：先静坐休息，30 分钟后复测；若复测仍高于 150/95 则升级一级响应。',
+      outcome: '已完成 · 家属同步收到“妈妈血压偏高，已语音安抚”的推送。',
+      pct: 100,
+      pctColor: '#0E9F8E',
+      note: '端到端链路已跑通，包含意图分解、5 个专业智能体调度与结果融合。',
+      levelNote: '本场景当前响应等级：二级关注，不升级紧急响应。'
+    },
+    med: {
+      title: '场景：用药咨询',
+      level: '无需响应',
+      levelStyle: { bg: '#E6F6F3', color: '#0B7C70' },
+      intent: '触发语句：“康伴康伴，我该吃药了吗？”',
+      decompose: '拆解为 2 个子任务：用药记录核对 → 口语化播报；涉及用药安全，需紧急预警智能体做一次风险校验。',
+      steps: [
+        { name: '用药管理智能体', role: '用药核对', out: '早间降压药 08:02 已服用，午间二甲双胍 12:30 待服。', ms: '180 ms', src: '依据：药品说明书 ·《中国老年人潜在不适当用药目录》' },
+        { name: '紧急预警智能体', role: '安全校验', out: '无用药冲突与过量风险，无需告警。', ms: '150 ms', src: '依据：用药相互作用知识库' },
+        { name: '健康监测智能体', role: '体征关联', out: '血压 128/78 正常，无需调整剂量。', ms: '240 ms', src: '依据：《中国高血压防治指南（2024 年修订版）》' },
+        { name: '陪伴智能体', role: '口语播报', out: '以口语化答复并安抚，避免老人记混。', ms: '200 ms', src: '共情话术库 · 不涉及医学结论' },
+        { name: '家属联动智能体', role: '家属同步', out: '本次无需通知家属，仅向本人播报。', ms: '—', skip: true }
+      ],
+      fusion: '答复老人：早间药已服，午间 12:30 二甲双胍 1 片饭后服，到点会提醒；无用药风险。',
+      outcome: '已完成 · 老人端语音播报 1 次，用药记录无变更。',
+      pct: 100,
+      pctColor: '#0E9F8E',
+      note: '端到端链路已跑通，含用药安全校验与口语化播报。',
+      levelNote: '本场景当前响应等级：无风险，仅记录不告警。'
+    },
+    fall: {
+      title: '场景：跌倒告警',
+      level: '一级响应',
+      levelStyle: { bg: '#FDECEA', color: '#B42318' },
+      intent: '触发源：手环检测到剧烈冲击 + 老人呼喊“救命”。',
+      decompose: '命中安全红线，跳过常规排队：直接进入一级响应链路，并行调取体征与用药信息。',
+      steps: [
+        { name: '紧急预警智能体', role: '一级响应', out: '0.8 秒内启动一级响应，拨打家属电话并推送定位。', ms: '210 ms', src: '依据：端侧跌倒检测规则（不经大模型）' },
+        { name: '健康监测智能体', role: '体征回传', out: '心率 112，血氧 95%，体位持续平躺超过 3 分钟。', ms: '320 ms', src: '依据：《中国老年人跌倒干预技术指南》' },
+        { name: '陪伴智能体', role: '安抚陪伴', out: '语音安抚“别怕，我在这儿”，引导老人不要起身。', ms: '260 ms', src: '共情话术库 · 不涉及医学结论' },
+        { name: '用药管理智能体', role: '用药核查', out: '排查体位性低血压诱因，降压药 1 小时前服用。', ms: '240 ms', src: '依据：药品说明书 ·《中国老年人潜在不适当用药目录》' },
+        { name: '家属联动智能体', role: '家属通知', out: '已推送家属端并同步社区医生，附定位与实时体征。', ms: '180 ms' }
+      ],
+      fusion: '判定为跌倒一级响应：家属电话已接通，社区医生同步呼叫；结果融合仍需人工确认后进入三级响应。',
+      outcome: '部分完成 · 端侧检测与一级告警链路已完成，结果融合与 120 数据同步仍在完善。',
+      pct: 80,
+      pctColor: '#E4611A',
+      note: '端侧检测与一级告警链路已完成，多智能体协同部分约 80%：社区医生自动联动、120 与医院侧数据同步仍在完善。',
+      levelNote: '本场景当前响应等级：一级响应进行中，二级、三级链路已就绪待触发。'
+    },
+    miss: {
+      title: '场景：思念家人',
+      level: '无需响应',
+      levelStyle: { bg: '#E6F6F3', color: '#0B7C70' },
+      intent: '触发语句：“康伴康伴，我想儿子了。”',
+      decompose: '拆解为 2 个子任务：情绪识别与共情 → 家人通道建立，同时做一次安全确认。',
+      steps: [
+        { name: '陪伴智能体', role: '情绪识别', out: '识别为思念情绪，触发共情话术并主动提议通话。', ms: '190 ms', src: '共情话术库 · 不涉及医学结论' },
+        { name: '健康监测智能体', role: '状态参考', out: '近 1 小时心率平稳 70–74，情绪波动可控。', ms: '210 ms', src: '依据：团队体征参考区间规则库' },
+        { name: '紧急预警智能体', role: '安全确认', out: '无风险信号，不升级响应。', ms: '120 ms', src: '依据：团队风险分级规则库（规则引擎，不经大模型）' },
+        { name: '家属联动智能体', role: '通道协商', out: '已通知家属端，协商可用时段并建立即时通话。', ms: '160 ms' },
+        { name: '用药管理智能体', role: '用药核对', out: '本次未调用，无需用药信息。', ms: '—', skip: true }
+      ],
+      fusion: '已建立与儿子李小明的视频通道，并把“妈妈想你、状态平稳”的上下文同步给家属端。',
+      outcome: '已完成 · 视频通话接通 8 分 42 秒，情绪由思念转为愉快。',
+      pct: 100,
+      pctColor: '#0E9F8E',
+      note: '端到端链路已跑通，包含情绪识别、家人通道建立与家属端上下文同步。',
+      levelNote: '本场景当前响应等级：无风险，陪伴与家人连接优先。'
+    }
+  };
+
+  var currentKey = 'dizzy';
+  var timers = [];
+
+  function clearTimers() {
+    for (var i = 0; i < timers.length; i++) {
+      window.clearTimeout(timers[i]);
+    }
+    timers = [];
+  }
+
+  function setState(i, state) {
+    var node = document.getElementById('node' + i);
+    var st = document.getElementById('st' + i);
+    var ms = document.getElementById('ms' + i);
+    node.classList.remove('is-active', 'is-done');
+    if (state === 'idle') {
+      st.className = 'tag tag-idle';
+      st.textContent = '待命';
+    } else if (state === 'active') {
+      node.classList.add('is-active');
+      st.className = 'tag tag-active';
+      st.textContent = '调用中…';
+    } else if (state === 'done') {
+      node.classList.add('is-done');
+      st.className = 'tag tag-done';
+      st.textContent = '已完成 ✓';
+    } else {
+      st.className = 'tag tag-skip';
+      st.textContent = '本次未调用';
+      ms.textContent = '—';
+    }
+  }
+
+  function renderScenario(key) {
+    var s = SCENARIOS[key];
+    document.getElementById('sceneTitle').textContent = s.title;
+    var levelEl = document.getElementById('sceneLevel');
+    levelEl.textContent = s.level;
+    levelEl.style.background = s.levelStyle.bg;
+    levelEl.style.color = s.levelStyle.color;
+    document.getElementById('sceneIntent').textContent = s.intent;
+    document.getElementById('decomposeText').textContent = s.decompose;
+    document.getElementById('fusionText').textContent = s.fusion;
+    document.getElementById('outcomeText').textContent = s.outcome;
+    document.getElementById('pctText').textContent = s.pct + '%';
+    document.getElementById('pctText').style.color = s.pctColor;
+    document.getElementById('pctBar').style.width = s.pct + '%';
+    document.getElementById('pctBar').style.background = s.pctColor;
+    document.getElementById('pctNote').textContent = s.note;
+    document.getElementById('levelNote').textContent = s.levelNote;
+    document.getElementById('orcheState').textContent = '待命';
+
+    for (var i = 0; i < 5; i++) {
+      var step = s.steps[i];
+      document.getElementById('name' + i).textContent = step.name;
+      document.getElementById('role' + i).textContent = step.role;
+      document.getElementById('out' + i).textContent = step.out;
+      document.getElementById('ms' + i).textContent = step.ms;
+      var _src = document.getElementById('src' + i);
+      _src.textContent = step.src || '';
+      _src.classList.toggle('hidden', !step.src);
+      setState(i, step.skip ? 'skip' : 'idle');
+    }
+  }
+
+  function play() {
+    clearTimers();
+    var s = SCENARIOS[currentKey];
+    for (var i = 0; i < 5; i++) {
+      setState(i, s.steps[i].skip ? 'skip' : 'idle');
+    }
+    document.getElementById('orcheState').textContent = '分解中…';
+
+    var index = 0;
+    function nextStep() {
+      if (index >= 5) {
+        document.getElementById('orcheState').textContent = '融合完成 ✓';
+        return;
+      }
+      var step = s.steps[index];
+      if (step.skip) {
+        setState(index, 'skip');
+        index = index + 1;
+        nextStep();
+        return;
+      }
+      setState(index, 'active');
+      var thisIndex = index;
+      timers.push(window.setTimeout(function () {
+        setState(thisIndex, 'done');
+        index = thisIndex + 1;
+        nextStep();
+      }, 760));
+    }
+
+    timers.push(window.setTimeout(function () {
+      document.getElementById('orcheState').textContent = '调度中…';
+      nextStep();
+    }, 420));
+  }
+
+  var sceneButtons = document.querySelectorAll('.scene');
+  for (var i = 0; i < sceneButtons.length; i++) {
+    sceneButtons[i].addEventListener('click', function () {
+      for (var j = 0; j < sceneButtons.length; j++) {
+        sceneButtons[j].classList.remove('on');
+      }
+      this.classList.add('on');
+      currentKey = this.getAttribute('data-key');
+      clearTimers();
+      renderScenario(currentKey);
+    });
+  }
+
+  document.getElementById('playBtn').addEventListener('click', play);
+  document.getElementById('resetBtn').addEventListener('click', function () {
+    clearTimers();
+    renderScenario(currentKey);
+  });
+
+  renderScenario('dizzy');
+</script>
+</body>
+</html>

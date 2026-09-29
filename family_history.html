@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html class="w-full h-full overflow-hidden" lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>康伴 CareLink · 家属监护端 | 历史回顾</title>
+<script src="vendor/tailwindcss.js"></script>
+<script src="vendor/icons-mdi.js"></script>
+<script src="vendor/iconify-icon.min.js"></script>
+<script src="vendor/echarts.min.js"></script>
+<style>
+  :root{
+    --brand:#E4611A;--teal:#0E9F8E;--ink:#14202E;--ink2:#48586C;--ink3:#8492A6;
+    --line:#E7EBF1;--bg:#F4F6FA;--danger:#D92D20;--dangertint:#FDECEA;
+  }
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .no-scrollbar{scrollbar-width:none;-ms-overflow-style:none;}
+  .no-scrollbar::-webkit-scrollbar{width:0;height:0;display:none;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 4px 14px rgba(20,32,46,.05);}
+  .tabbtn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;flex:1;min-height:56px;color:var(--ink3);text-decoration:none;}
+  .tabbtn iconify-icon{font-size:25px;}
+  .tabbtn.on{color:var(--teal);}
+  .tabbtn span{font-size:12px;font-weight:700;}
+  .seg{flex:1;min-height:44px;border-radius:12px;font-size:14px;font-weight:800;color:var(--ink3);background:transparent;border:none;}
+  .seg.on{background:#fff;color:#0E9F8E;box-shadow:0 2px 8px rgba(20,32,46,.08);}
+  .tl{position:relative;padding-left:18px;}
+  .tl::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:#E7EBF1;}
+  .tl li{position:relative;margin-bottom:14px;}
+  .tl li::before{content:"";position:absolute;left:-17px;top:6px;width:10px;height:10px;border-radius:999px;background:#fff;border:2.5px solid #0E9F8E;}
+</style>
+</head>
+<body class="w-full h-full m-0 overflow-hidden flex items-center justify-center bg-[#E9EDF3]">
+<div class="w-full h-full max-w-[393px] max-h-[852px] bg-[#F4F6FA] flex flex-col overflow-hidden relative shadow-[0_0_60px_rgba(15,23,42,.18)]">
+<header class="shrink-0 bg-gradient-to-br from-[#0B7C70] to-[#12B8A6] text-white">
+<div class="h-9 px-4 flex items-center justify-between text-[12px] text-white/90">
+<span class="font-semibold">08:20</span>
+<div class="flex items-center gap-2">
+<iconify-icon icon="mdi:wifi"></iconify-icon>
+<iconify-icon icon="mdi:battery-80"></iconify-icon>
+</div>
+</div>
+<div class="px-3 pb-3 pt-1 flex items-center gap-2">
+<a aria-label="返回家属端首页" class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center" href="family_home.html">
+<iconify-icon class="text-[22px]" icon="mdi:arrow-left"></iconify-icon>
+</a>
+<div class="flex-1">
+<p class="text-[19px] font-extrabold leading-tight">历史回顾</p>
+<p class="text-[12px] text-white/90">李奶奶 · 近 7 天（9/23 - 9/29）</p>
+</div>
+<button class="min-h-[40px] px-3 rounded-full bg-white/20 text-[12px] font-extrabold" id="exportBtn">导出周报</button>
+</div>
+<div class="mx-3 mb-3 flex gap-1 p-1 rounded-2xl bg-white/15">
+<button class="seg on" data-panel="panelHealth">健康趋势</button>
+<button class="seg" data-panel="panelEvents">事件时间线</button>
+<button class="seg" data-panel="panelAgents">智能体记录</button>
+</div>
+</header>
+<main class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden no-scrollbar px-4 py-4 space-y-4">
+<section class="space-y-4" id="panelHealth">
+<div class="grid grid-cols-2 gap-3">
+<div class="card p-3">
+<p class="text-[12px] font-bold text-[#8492A6]">平均血压</p>
+<p class="text-[22px] font-extrabold">133/82 <span class="text-[12px] font-bold text-[#8492A6]">mmHg</span></p>
+<p class="text-[12px] font-extrabold text-[#0E9F8E]">较上周 ↓5 / ↓3</p>
+</div>
+<div class="card p-3">
+<p class="text-[12px] font-bold text-[#8492A6]">用药依从性</p>
+<p class="text-[22px] font-extrabold">96 <span class="text-[12px] font-bold text-[#8492A6]">%</span></p>
+<p class="text-[12px] font-extrabold text-[#B54708]">9/27 漏服 1 次</p>
+</div>
+<div class="card p-3">
+<p class="text-[12px] font-bold text-[#8492A6]">日均步数</p>
+<p class="text-[22px] font-extrabold">3 680 <span class="text-[12px] font-bold text-[#8492A6]">步</span></p>
+<p class="text-[12px] font-extrabold text-[#0E9F8E]">高于上周 12%</p>
+</div>
+<div class="card p-3">
+<p class="text-[12px] font-bold text-[#8492A6]">平均睡眠</p>
+<p class="text-[22px] font-extrabold">7.1 <span class="text-[12px] font-bold text-[#8492A6]">小时</span></p>
+<p class="text-[12px] font-extrabold text-[#0E9F8E]">较上周 ↑0.4h</p>
+</div>
+</div>
+<div class="card p-4">
+<div class="flex items-center justify-between">
+<h2 class="text-[16px] font-extrabold">一周血压趋势</h2>
+<span class="text-[12px] font-bold text-[#8492A6]">单位：mmHg</span>
+</div>
+<div class="mt-2 w-full" id="weekChart" style="height:180px"></div>
+</div>
+<div class="card p-4">
+<div class="flex items-center justify-between">
+<h2 class="text-[16px] font-extrabold">每日用药完成情况</h2>
+<span class="text-[12px] font-bold text-[#8492A6]">单位：次</span>
+</div>
+<div class="mt-2 w-full" id="medChart" style="height:160px"></div>
+<p class="mt-1 text-[12px] text-[#8492A6]">9 月 27 日仅完成 2 次，晚间阿司匹林漏服，已由用药管理智能体提醒家属。</p>
+</div>
+<div class="card p-4">
+<h2 class="text-[16px] font-extrabold">这周值得留意的三件事</h2>
+<ul class="mt-2 space-y-2 text-[14px] leading-6 text-[#48586C]">
+<li class="rounded-xl bg-[#E6F6F3] px-3 py-2.5">血压整体下行，降压方案有效，可继续保持。</li>
+<li class="rounded-xl bg-[#FFF6E6] px-3 py-2.5">9/27 晚间漏服 1 次，建议开启药盒语音二次提醒。</li>
+<li class="rounded-xl bg-[#F4F6FA] px-3 py-2.5">晚间睡眠偏浅，22:30 后客厅电视音量偏高，建议设定就寝提示。</li>
+</ul>
+</div>
+</section>
+<section class="hidden space-y-4" id="panelEvents">
+<div class="card p-4">
+<h2 class="text-[16px] font-extrabold">事件时间线</h2>
+<ul class="tl mt-3 text-[14px] leading-6">
+<li>
+<p class="font-extrabold">09-29 08:02 · 用药打卡</p>
+<p class="text-[#8492A6]">氨氯地平已服用，老人通过语音回答“吃了”，用药管理智能体记录。</p>
+</li>
+<li>
+<p class="font-extrabold">09-29 07:30 · 晨间体检</p>
+<p class="text-[#8492A6]">血压 128/78 mmHg，心率 72，血氧 97%，全部正常。</p>
+</li>
+<li>
+<p class="font-extrabold text-[#B42318]">09-28 14:20 · 二级预警 血压偏高</p>
+<p class="text-[#8492A6]">三重通知已送达，6 分钟后复测 136/84 解除。</p>
+<a class="mt-1 inline-block text-[13px] font-extrabold text-[#0E9F8E]" href="family_alert.html">查看预警详情 →</a>
+</li>
+<li>
+<p class="font-extrabold text-[#8A4B08]">09-27 19:00 · 晚间用药漏服</p>
+<p class="text-[#8492A6]">药盒未开盖，语音提醒 2 次未响应，20:10 推送给你。</p>
+</li>
+<li>
+<p class="font-extrabold">09-26 15:30 · 视频通话</p>
+<p class="text-[#8492A6]">你与妈妈通话 8 分 42 秒，情绪状态良好（陪伴智能体情绪识别：愉快）。</p>
+</li>
+<li>
+<p class="font-extrabold">09-24 10:12 · 社区活动签到</p>
+<p class="text-[#8492A6]">楼下活动室书法班，停留 76 分钟。</p>
+</li>
+</ul>
+</div>
+</section>
+<section class="hidden space-y-4" id="panelAgents">
+<div class="rounded-[18px] bg-gradient-to-br from-[#14202E] to-[#2C3E52] text-white p-4">
+<p class="text-[15px] font-extrabold flex items-center gap-2">
+<iconify-icon class="text-[20px] text-[#FFB27A]" icon="mdi:hub"></iconify-icon>编排智能体 · 本周汇总
+        </p>
+<p class="mt-2 text-[13px] leading-6 text-white/85">本周共处理 84 次请求，调度专业智能体 132 次，触发预警 2 次（1 次二级、1 次漏服提醒），无一级响应事件。</p>
+</div>
+<div class="card p-4">
+<h2 class="text-[16px] font-extrabold">各智能体工作记录</h2>
+<ul class="mt-3 space-y-2 text-[14px]">
+<li class="rounded-2xl bg-[#F4F6FA] px-3 py-3">
+<div class="flex items-center justify-between"><span class="font-extrabold">健康监测智能体</span><span class="text-[12px] font-extrabold text-[#0E9F8E]">调用 46 次</span></div>
+<p class="mt-1 text-[13px] text-[#8492A6]">最近输出：09-29 07:30 血压 128/78，判定正常，趋势下行。</p>
+</li>
+<li class="rounded-2xl bg-[#F4F6FA] px-3 py-3">
+<div class="flex items-center justify-between"><span class="font-extrabold">紧急预警智能体</span><span class="text-[12px] font-extrabold text-[#D92D20]">调用 9 次</span></div>
+<p class="mt-1 text-[13px] text-[#8492A6]">最近输出：09-28 14:20 判定二级预警，已通知家属并跟踪复测。</p>
+</li>
+<li class="rounded-2xl bg-[#F4F6FA] px-3 py-3">
+<div class="flex items-center justify-between"><span class="font-extrabold">陪伴智能体</span><span class="text-[12px] font-extrabold text-[#0E9F8E]">调用 31 次</span></div>
+<p class="mt-1 text-[13px] text-[#8492A6]">最近输出：09-29 08:18 完成唤醒问候，情绪评估为平稳。</p>
+</li>
+<li class="rounded-2xl bg-[#F4F6FA] px-3 py-3">
+<div class="flex items-center justify-between"><span class="font-extrabold">用药管理智能体</span><span class="text-[12px] font-extrabold text-[#B54708]">调用 27 次</span></div>
+<p class="mt-1 text-[13px] text-[#8492A6]">最近输出：09-29 08:02 记录服药打卡，库存提醒剩余 4 天。</p>
+</li>
+<li class="rounded-2xl bg-[#F4F6FA] px-3 py-3">
+<div class="flex items-center justify-between"><span class="font-extrabold">家属联动智能体</span><span class="text-[12px] font-extrabold text-[#0E9F8E]">调用 19 次</span></div>
+<p class="mt-1 text-[13px] text-[#8492A6]">最近输出：今日已向家属端推送 4 条状态简报，含 10:00 血压复测结果。</p>
+</li>
+</ul>
+</div>
+<a class="block rounded-[18px] bg-white border border-[#E7EBF1] p-4 text-center" href="agent_demo.html">
+<p class="text-[15px] font-extrabold text-[#0E9F8E]">查看多智能体协同可视化演示 →</p>
+<p class="mt-1 text-[12px] text-[#8492A6]">回放头晕不适 / 用药咨询 / 跌倒告警 / 思念家人的完整调度链路</p>
+</a>
+</section>
+<p class="hidden text-center text-[13px] font-bold text-[#0E9F8E] pb-1" id="exportState">周报已生成，可在「关怀」页分享给家庭医生 ✓</p>
+</main>
+<nav class="shrink-0 bg-white border-t border-[#E7EBF1] flex items-stretch px-1">
+<a class="tabbtn" href="family_home.html">
+<iconify-icon icon="mdi:view-dashboard"></iconify-icon><span>首页</span>
+</a>
+<a class="tabbtn" href="family_alert.html">
+<iconify-icon icon="mdi:bell-alert"></iconify-icon><span>预警</span>
+</a>
+<a class="tabbtn on" href="family_history.html">
+<iconify-icon icon="mdi:history"></iconify-icon><span>历史</span>
+</a>
+<a class="tabbtn" href="family_care.html">
+<iconify-icon icon="mdi:hand-heart"></iconify-icon><span>关怀</span>
+</a>
+</nav>
+</div>
+<script>
+  var segs = document.querySelectorAll('.seg');
+  var panels = ['panelHealth', 'panelEvents', 'panelAgents'];
+  for (var i = 0; i < segs.length; i++) {
+    segs[i].addEventListener('click', function () {
+      for (var j = 0; j < segs.length; j++) {
+        segs[j].classList.remove('on');
+      }
+      this.classList.add('on');
+      var target = this.getAttribute('data-panel');
+      for (var k = 0; k < panels.length; k++) {
+        document.getElementById(panels[k]).classList.add('hidden');
+      }
+      document.getElementById(target).classList.remove('hidden');
+      if (target === 'panelHealth') {
+        weekChart.resize();
+        medChart.resize();
+      }
+    });
+  }
+
+  var exportBtn = document.getElementById('exportBtn');
+  exportBtn.addEventListener('click', function () {
+    document.getElementById('exportState').classList.remove('hidden');
+    exportBtn.textContent = '已生成 ✓';
+  });
+
+  var weekChart = echarts.init(document.getElementById('weekChart'));
+  weekChart.setOption({
+    grid: { left: 38, right: 12, top: 16, bottom: 26 },
+    tooltip: { trigger: 'axis', valueFormatter: function (v) { return v + ' mmHg'; } },
+    xAxis: {
+      type: 'category',
+      data: ['9/23', '9/24', '9/25', '9/26', '9/27', '9/28', '9/29'],
+      axisLine: { lineStyle: { color: '#E7EBF1' } },
+      axisLabel: { color: '#8492A6', fontSize: 11 },
+      axisTick: { show: false }
+    },
+    yAxis: {
+      type: 'value',
+      min: 50,
+      max: 170,
+      name: 'mmHg',
+      nameTextStyle: { color: '#8492A6', fontSize: 11 },
+      axisLabel: { color: '#8492A6', fontSize: 11 },
+      splitLine: { lineStyle: { color: '#EEF1F6' } }
+    },
+    series: [
+      {
+        name: '收缩压',
+        type: 'line',
+        smooth: true,
+        symbolSize: 6,
+        data: [138, 134, 141, 132, 136, 148, 128],
+        itemStyle: { color: '#E4611A' },
+        lineStyle: { width: 3 },
+        areaStyle: { color: 'rgba(228,97,26,.10)' }
+      },
+      {
+        name: '舒张压',
+        type: 'line',
+        smooth: true,
+        symbolSize: 6,
+        data: [84, 82, 88, 81, 83, 92, 78],
+        itemStyle: { color: '#0E9F8E' },
+        lineStyle: { width: 3 }
+      }
+    ]
+  });
+
+  var medChart = echarts.init(document.getElementById('medChart'));
+  medChart.setOption({
+    grid: { left: 30, right: 12, top: 18, bottom: 24 },
+    tooltip: { trigger: 'axis', valueFormatter: function (v) { return v + ' 次'; } },
+    xAxis: {
+      type: 'category',
+      data: ['9/23', '9/24', '9/25', '9/26', '9/27', '9/28', '9/29'],
+      axisLine: { lineStyle: { color: '#E7EBF1' } },
+      axisLabel: { color: '#8492A6', fontSize: 10 },
+      axisTick: { show: false }
+    },
+    yAxis: {
+      type: 'value',
+      max: 3,
+      name: '次/日',
+      nameTextStyle: { color: '#8492A6', fontSize: 11 },
+      axisLabel: { color: '#8492A6', fontSize: 10 },
+      splitLine: { lineStyle: { color: '#EEF1F6' } }
+    },
+    series: [
+      {
+        name: '已完成用药',
+        type: 'bar',
+        barWidth: 16,
+        data: [
+          { value: 3, itemStyle: { color: '#0E9F8E' } },
+          { value: 3, itemStyle: { color: '#0E9F8E' } },
+          { value: 3, itemStyle: { color: '#0E9F8E' } },
+          { value: 3, itemStyle: { color: '#0E9F8E' } },
+          { value: 2, itemStyle: { color: '#D92D20' } },
+          { value: 3, itemStyle: { color: '#0E9F8E' } },
+          { value: 2, itemStyle: { color: '#E4611A' } }
+        ],
+        itemStyle: { borderRadius: [6, 6, 0, 0] }
+      }
+    ]
+  });
+
+  window.addEventListener('resize', function () {
+    weekChart.resize();
+    medChart.resize();
+  });
+</script>
+</body>
+</html>

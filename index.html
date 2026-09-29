@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html class="w-full h-full overflow-hidden" lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>康伴 CareLink · 原型集导览</title>
+<script src="vendor/tailwindcss.js"></script>
+<script src="vendor/icons-mdi.js"></script>
+<script src="vendor/iconify-icon.min.js"></script>
+<style>
+  :root{
+    --brand:#E4611A;--brand2:#FF8A3D;--brandtint:#FFF2E8;
+    --teal:#0E9F8E;--tealtint:#E6F6F3;
+    --ink:#14202E;--ink2:#48586C;--ink3:#8492A6;
+    --line:#E7EBF1;--bg:#F4F6FA;--danger:#D92D20;--dangertint:#FDECEA;
+  }
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .no-scrollbar{scrollbar-width:none;-ms-overflow-style:none;}
+  .no-scrollbar::-webkit-scrollbar{width:0;height:0;display:none;}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 4px 14px rgba(20,32,46,.05);}
+  .entry{display:flex;align-items:center;gap:8px;min-height:40px;padding:8px 12px;border-radius:12px;background:var(--bg);border:1px solid var(--line);font-size:14px;font-weight:600;color:var(--ink2);text-decoration:none;}
+  .entry iconify-icon{font-size:17px;color:var(--brand);}
+  .chip{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;background:var(--bg);border:1px solid var(--line);font-size:13px;color:var(--ink2);}
+  .bar{height:9px;border-radius:999px;background:#EDF0F5;overflow:hidden;}
+  .bar > i{display:block;height:100%;border-radius:999px;}
+</style>
+</head>
+<body class="w-full h-full m-0 overflow-hidden flex items-center justify-center bg-[#E9EDF3]">
+<div class="w-full h-full max-w-[393px] max-h-[852px] bg-[#F4F6FA] flex flex-col overflow-hidden relative shadow-[0_0_60px_rgba(15,23,42,.18)]">
+<header class="shrink-0 bg-gradient-to-br from-[#E4611A] to-[#FF8A3D] text-white">
+<div class="h-9 px-5 flex items-center justify-between text-[12px] text-white/90">
+<span class="font-semibold">08:20</span>
+<div class="flex items-center gap-1.5">
+<iconify-icon icon="mdi:signal"></iconify-icon>
+<iconify-icon icon="mdi:wifi"></iconify-icon>
+<iconify-icon icon="mdi:battery-70"></iconify-icon>
+</div>
+</div>
+<div class="px-5 pb-5 pt-1">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-2xl bg-white/20 flex items-center justify-center">
+<iconify-icon class="text-2xl" icon="mdi:heart-pulse"></iconify-icon>
+</div>
+<div>
+<p class="text-[19px] font-bold leading-tight">康伴 CareLink</p>
+<p class="text-[12px] text-white/85">智慧养老健康陪伴系统</p>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2 text-[12px]">
+<span class="px-2.5 py-1 rounded-full bg-white/20 font-semibold">在线 Demo 原型</span>
+<span class="px-2.5 py-1 rounded-full bg-white/20 font-semibold">公开访问 · 无需密码</span>
+</div>
+</div>
+</header>
+<main class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden no-scrollbar px-4 py-4 space-y-4">
+<section class="panel p-4">
+<div class="flex items-start gap-3">
+<iconify-icon class="text-xl text-[#E4611A] mt-0.5" icon="mdi:information-outline"></iconify-icon>
+<div class="text-[13px] leading-6 text-[#48586C]">
+<p class="font-bold text-[15px] text-[#14202E] mb-1">演示说明</p>
+<p>本原型集对应墨刀原型项目「康伴CareLink-智慧养老健康陪伴系统」，共三块核心画板：老人陪伴端、家属监护端、多智能体协同可视化演示页。</p>
+<p class="mt-1">点击下方任一条目进入对应页面，页面之间的跳转为真实原型交互，无需后端。</p>
+</div>
+</div>
+<div class="mt-3 flex flex-wrap gap-2">
+<span class="chip"><iconify-icon class="text-[15px]" icon="mdi:update"></iconify-icon>更新于 2026-09-29</span>
+<span class="chip"><iconify-icon class="text-[15px]" icon="mdi:account-multiple"></iconify-icon>3 块画板 · 12 个页面</span>
+</div>
+</section>
+<section class="space-y-3">
+<div class="flex items-center justify-between px-1">
+<h2 class="text-[15px] font-bold">核心画板</h2>
+<span class="text-[12px] text-[#8492A6]">点击进入主要页面</span>
+</div>
+<article class="panel p-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-[#FFF2E8] flex items-center justify-center">
+<iconify-icon class="text-[22px] text-[#E4611A]" icon="mdi:human-cane"></iconify-icon>
+</div>
+<div class="flex-1">
+<p class="text-[15px] font-bold">画板一 · 老人陪伴端</p>
+<p class="text-[12px] text-[#8492A6]">大字体 · 语音优先 · 紧急求助常驻</p>
+</div>
+</div>
+<p class="mt-2 text-[13px] leading-6 text-[#48586C]">面向老人本人：说「康伴康伴」即可唤醒对话，自动判断意图并调度智能体；关键提醒采用语音+震动+视觉三重提示。</p>
+<div class="mt-3 grid grid-cols-2 gap-2">
+<a class="entry" href="elder_home.html"><iconify-icon icon="mdi:home-variant"></iconify-icon>首页 / 语音唤醒</a>
+<a class="entry" href="elder_chat.html"><iconify-icon icon="mdi:microphone-message"></iconify-icon>日常陪伴对话</a>
+<a class="entry" href="elder_health.html"><iconify-icon icon="mdi:chart-line"></iconify-icon>健康查询</a>
+<a class="entry" href="elder_medication.html"><iconify-icon icon="mdi:pill"></iconify-icon>用药提醒</a>
+<a class="entry" href="elder_contact.html"><iconify-icon icon="mdi:video-account"></iconify-icon>家人联系</a>
+<a class="entry" href="elder_sos.html"><iconify-icon icon="mdi:alert-octagon"></iconify-icon>紧急求助</a>
+</div>
+</article>
+<article class="panel p-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-[#E6F6F3] flex items-center justify-center">
+<iconify-icon class="text-[22px] text-[#0E9F8E]" icon="mdi:cellphone-screenshot"></iconify-icon>
+</div>
+<div class="flex-1">
+<p class="text-[15px] font-bold">画板二 · 家属监护端</p>
+<p class="text-[12px] text-[#8492A6]">状态查看 · 三重预警 · 历史回顾</p>
+</div>
+</div>
+<p class="mt-2 text-[13px] leading-6 text-[#48586C]">面向子女：实时查看父母体征、活动与用药情况；异常时收到短信+APP推送+电话三重通知，并支持远程语音关怀。</p>
+<div class="mt-3 grid grid-cols-2 gap-2">
+<a class="entry" href="family_home.html"><iconify-icon icon="mdi:view-dashboard-outline"></iconify-icon>状态总览</a>
+<a class="entry" href="family_alert.html"><iconify-icon icon="mdi:bell-alert"></iconify-icon>预警详情</a>
+<a class="entry" href="family_history.html"><iconify-icon icon="mdi:history"></iconify-icon>历史回顾</a>
+<a class="entry" href="family_care.html"><iconify-icon icon="mdi:hand-heart"></iconify-icon>远程关怀</a>
+</div>
+</article>
+<article class="panel p-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-[#EEF1F6] flex items-center justify-center">
+<iconify-icon class="text-[22px] text-[#14202E]" icon="mdi:robot-happy-outline"></iconify-icon>
+</div>
+<div class="flex-1">
+<p class="text-[15px] font-bold">画板三 · 多智能体协同可视化</p>
+<p class="text-[12px] text-[#8492A6]">场景切换 · 调度链路可回放</p>
+</div>
+</div>
+<p class="mt-2 text-[13px] leading-6 text-[#48586C]">实时展示编排智能体意图分解 → 调度专业智能体 → 结果融合的完整过程，呈现各智能体调用顺序与输出。</p>
+<a class="entry mt-3" href="agent_demo.html"><iconify-icon icon="mdi:transit-connection-variant"></iconify-icon>进入协同可视化演示</a>
+</article>
+</section>
+<section class="panel p-4">
+<h2 class="text-[15px] font-bold">智能体体系</h2>
+<p class="mt-1 text-[12px] text-[#8492A6]">1 个编排智能体 + 5 个专业智能体</p>
+<div class="mt-3 rounded-2xl bg-gradient-to-br from-[#14202E] to-[#2C3E52] text-white p-3 flex items-center gap-3">
+<iconify-icon class="text-2xl text-[#FFB27A]" icon="mdi:hub"></iconify-icon>
+<div>
+<p class="text-[14px] font-bold">编排智能体 Orchestrator</p>
+<p class="text-[12px] text-white/75">意图识别 · 任务分解 · 调度与结果融合</p>
+</div>
+</div>
+<div class="mt-2 grid grid-cols-2 gap-2 text-[12px]">
+<span class="chip"><iconify-icon class="text-[15px] text-[#E4611A]" icon="mdi:heart-pulse"></iconify-icon>健康监测智能体</span>
+<span class="chip"><iconify-icon class="text-[15px] text-[#D92D20]" icon="mdi:shield-alert"></iconify-icon>紧急预警智能体</span>
+<span class="chip"><iconify-icon class="text-[15px] text-[#0E9F8E]" icon="mdi:pill"></iconify-icon>用药管理智能体</span>
+<span class="chip"><iconify-icon class="text-[15px] text-[#E4611A]" icon="mdi:account-heart"></iconify-icon>陪伴智能体</span>
+<span class="chip col-span-2"><iconify-icon class="text-[15px] text-[#8492A6]" icon="mdi:account-group"></iconify-icon>家属联动智能体</span>
+</div>
+</section>
+<section class="panel p-4">
+<div class="flex items-center justify-between">
+<h2 class="text-[15px] font-bold">场景完成度</h2>
+<a class="text-[12px] font-semibold text-[#E4611A]" href="agent_demo.html">查看链路</a>
+</div>
+<div class="mt-3 space-y-3">
+<div>
+<div class="flex items-center justify-between text-[13px] font-semibold">
+<span>头晕不适</span><span class="text-[#0E9F8E]">100%</span>
+</div>
+<div class="bar mt-1.5"><i style="width:100%;background:#0E9F8E"></i></div>
+</div>
+<div>
+<div class="flex items-center justify-between text-[13px] font-semibold">
+<span>用药咨询</span><span class="text-[#0E9F8E]">100%</span>
+</div>
+<div class="bar mt-1.5"><i style="width:100%;background:#0E9F8E"></i></div>
+</div>
+<div>
+<div class="flex items-center justify-between text-[13px] font-semibold">
+<span>思念家人</span><span class="text-[#0E9F8E]">100%</span>
+</div>
+<div class="bar mt-1.5"><i style="width:100%;background:#0E9F8E"></i></div>
+</div>
+<div>
+<div class="flex items-center justify-between text-[13px] font-semibold">
+<span>跌倒告警</span><span class="text-[#B54708]">80%</span>
+</div>
+<div class="bar mt-1.5"><i style="width:80%;background:#E4611A"></i></div>
+<p class="mt-1.5 text-[12px] leading-5 text-[#8492A6]">端侧检测与一级告警链路已完成，多智能体协同部分约 80%，结果融合与社区医生自动联动仍在完善。</p>
+</div>
+</div>
+</section>
+<section class="panel p-4">
+<h2 class="text-[15px] font-bold">三级应急响应</h2>
+<div class="mt-3 space-y-2">
+<div class="flex items-center gap-3 rounded-2xl border border-[#F3C9C4] bg-[#FDECEA] px-3 py-2.5">
+<span class="w-7 h-7 rounded-full bg-[#D92D20] text-white text-[13px] font-bold flex items-center justify-center">1</span>
+<div class="text-[13px]"><p class="font-bold text-[#B42318]">一级响应 · 本人 + 家属</p><p class="text-[#8A4038]">紧急预警智能体即时接管，语音安抚并同步通知子女</p></div>
+</div>
+<div class="flex items-center gap-3 rounded-2xl border border-[#F5DDB8] bg-[#FFF6E6] px-3 py-2.5">
+<span class="w-7 h-7 rounded-full bg-[#B54708] text-white text-[13px] font-bold flex items-center justify-center">2</span>
+<div class="text-[13px]"><p class="font-bold text-[#8A4B08]">二级响应 · 社区医生 / 网格员</p><p class="text-[#8A6A38]">5 分钟未解除则联动签约医生上门核查</p></div>
+</div>
+<div class="flex items-center gap-3 rounded-2xl border border-[#D5DEE9] bg-white px-3 py-2.5">
+<span class="w-7 h-7 rounded-full bg-[#48586C] text-white text-[13px] font-bold flex items-center justify-center">3</span>
+<div class="text-[13px]"><p class="font-bold">三级响应 · 120 急救 / 医院</p><p class="text-[#8492A6]">同步体征与位置至急救中心，家属实时共享定位</p></div>
+</div>
+</div>
+</section>
+<p class="text-center text-[11px] text-[#8492A6] pb-2">康伴 CareLink · 大赛评审专属 Demo · 链接公开无密码</p>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="w-full h-full overflow-hidden" lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>康伴 CareLink · 家属监护端 | 预警详情</title>
+<script src="vendor/tailwindcss.js"></script>
+<script src="vendor/icons-mdi.js"></script>
+<script src="vendor/iconify-icon.min.js"></script>
+<script src="vendor/echarts.min.js"></script>
+<style>
+  :root{
+    --brand:#E4611A;--teal:#0E9F8E;--ink:#14202E;--ink2:#48586C;--ink3:#8492A6;
+    --line:#E7EBF1;--bg:#F4F6FA;--danger:#D92D20;--dangertint:#FDECEA;
+  }
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .no-scrollbar{scrollbar-width:none;-ms-overflow-style:none;}
+  .no-scrollbar::-webkit-scrollbar{width:0;height:0;display:none;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 4px 14px rgba(20,32,46,.05);}
+  .tabbtn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;flex:1;min-height:56px;color:var(--ink3);text-decoration:none;}
+  .tabbtn iconify-icon{font-size:25px;}
+  .tabbtn.on{color:var(--teal);}
+  .tabbtn span{font-size:12px;font-weight:700;}
+  .notice{display:flex;align-items:center;gap:10px;border-radius:14px;padding:10px 12px;border:1px solid var(--line);}
+</style>
+</head>
+<body class="w-full h-full m-0 overflow-hidden flex items-center justify-center bg-[#E9EDF3]">
+<div class="w-full h-full max-w-[393px] max-h-[852px] bg-[#F4F6FA] flex flex-col overflow-hidden relative shadow-[0_0_60px_rgba(15,23,42,.18)]">
+<header class="shrink-0 bg-gradient-to-br from-[#B42318] to-[#E4483B] text-white">
+<div class="h-9 px-4 flex items-center justify-between text-[12px] text-white/90">
+<span class="font-semibold">08:20</span>
+<div class="flex items-center gap-2">
+<iconify-icon icon="mdi:wifi"></iconify-icon>
+<iconify-icon icon="mdi:battery-80"></iconify-icon>
+</div>
+</div>
+<div class="px-3 pb-4 pt-1 flex items-center gap-2">
+<a aria-label="返回家属端首页" class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center" href="family_home.html">
+<iconify-icon class="text-[22px]" icon="mdi:arrow-left"></iconify-icon>
+</a>
+<div class="flex-1">
+<p class="text-[19px] font-extrabold leading-tight">预警详情</p>
+<p class="text-[12px] text-white/90">紧急预警智能体 · 编号 AL-0928-1420</p>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-white/20 text-[12px] font-extrabold">已缓解</span>
+</div>
+</header>
+<main class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden no-scrollbar px-4 py-4 space-y-4">
+<section class="rounded-[18px] bg-white border border-[#F3C9C4] p-4">
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-1 rounded-full bg-[#FDECEA] text-[#B42318] text-[12px] font-extrabold">二级预警</span>
+<span class="px-2.5 py-1 rounded-full bg-[#F4F6FA] text-[#48586C] text-[12px] font-extrabold">健康类</span>
+</div>
+<p class="mt-2.5 text-[19px] font-extrabold">血压偏高：148 / 92 mmHg</p>
+<p class="mt-1 text-[14px] text-[#48586C] leading-6">2026-09-28 14:20:05 · 客厅 · 持续 6 分钟后复测恢复正常，未升级为一级响应。</p>
+<div class="mt-3 grid grid-cols-3 gap-2 text-center">
+<div class="rounded-2xl bg-[#FDECEA] py-2.5">
+<p class="text-[22px] font-extrabold text-[#D92D20]">148/92</p>
+<p class="text-[11px] font-bold text-[#8A4038]">触发值 mmHg</p>
+</div>
+<div class="rounded-2xl bg-[#E6F6F3] py-2.5">
+<p class="text-[22px] font-extrabold text-[#0E9F8E]">136/84</p>
+<p class="text-[11px] font-bold text-[#0B7C70]">复测值 mmHg</p>
+</div>
+<div class="rounded-2xl bg-[#F4F6FA] py-2.5">
+<p class="text-[22px] font-extrabold">14:26</p>
+<p class="text-[11px] font-bold text-[#8492A6]">解除时间</p>
+</div>
+</div>
+</section>
+<section class="card p-4">
+<h2 class="text-[16px] font-extrabold flex items-center gap-2">
+<iconify-icon class="text-[20px] text-[#D92D20]" icon="mdi:bell-badge-outline"></iconify-icon>三重通知状态
+      </h2>
+<div class="mt-3 space-y-2">
+<div class="notice bg-[#E6F6F3] border-[#BFE7E1]">
+<iconify-icon class="text-[22px] text-[#0E9F8E]" icon="mdi:message-text"></iconify-icon>
+<div class="flex-1 text-[14px]"><p class="font-extrabold">短信通知</p><p class="text-[#0B7C70]">已送达 14:20:12 · 含位置与体征</p></div>
+<iconify-icon class="text-[20px] text-[#0E9F8E]" icon="mdi:check-circle"></iconify-icon>
+</div>
+<div class="notice bg-[#E6F6F3] border-[#BFE7E1]">
+<iconify-icon class="text-[22px] text-[#0E9F8E]" icon="mdi:cellphone-arrow-down"></iconify-icon>
+<div class="flex-1 text-[14px]"><p class="font-extrabold">APP 推送</p><p class="text-[#0B7C70]">已送达 14:20:08 · 已点开查看</p></div>
+<iconify-icon class="text-[20px] text-[#0E9F8E]" icon="mdi:check-circle"></iconify-icon>
+</div>
+<div class="notice bg-[#E6F6F3] border-[#BFE7E1]">
+<iconify-icon class="text-[22px] text-[#0E9F8E]" icon="mdi:phone-in-talk"></iconify-icon>
+<div class="flex-1 text-[14px]"><p class="font-extrabold">电话通知</p><p class="text-[#0B7C70]">已接通 14:20:35 · 通话 48 秒</p></div>
+<iconify-icon class="text-[20px] text-[#0E9F8E]" icon="mdi:check-circle"></iconify-icon>
+</div>
+</div>
+<p class="mt-2 text-[12px] text-[#8492A6]">三级响应规则：一级未确认 90 秒 → 自动升级电话通知；仍未处理 → 通知社区医生。</p>
+</section>
+<section class="card p-4">
+<div class="flex items-center justify-between">
+<h2 class="text-[16px] font-extrabold">24 小时血压变化</h2>
+<span class="text-[12px] font-bold text-[#8492A6]">单位：mmHg</span>
+</div>
+<div class="mt-2 w-full" id="alertChart" style="height:186px"></div>
+<p class="mt-1 text-[12px] text-[#8492A6]">红色标记点为 14:20 触发预警的瞬时读数（148/92）。</p>
+</section>
+<section class="card p-4">
+<h2 class="text-[16px] font-extrabold">智能体处置过程</h2>
+<ol class="mt-3 space-y-3">
+<li class="flex gap-3">
+<span class="w-8 h-8 shrink-0 rounded-full bg-[#F4F6FA] text-[13px] font-extrabold flex items-center justify-center">1</span>
+<div class="text-[14px] leading-6"><p class="font-extrabold">14:20:05 端侧检测异常</p><p class="text-[#8492A6]">智能血压计上传 148/92，超过个体安全阈值。</p></div>
+</li>
+<li class="flex gap-3">
+<span class="w-8 h-8 shrink-0 rounded-full bg-[#F4F6FA] text-[13px] font-extrabold flex items-center justify-center">2</span>
+<div class="text-[14px] leading-6"><p class="font-extrabold">14:20:07 编排智能体分解意图</p><p class="text-[#8492A6]">识别为「体征异常-健康类」，并行调度健康监测与紧急预警智能体。</p></div>
+</li>
+<li class="flex gap-3">
+<span class="w-8 h-8 shrink-0 rounded-full bg-[#FDECEA] text-[13px] font-extrabold text-[#B42318] flex items-center justify-center">3</span>
+<div class="text-[14px] leading-6"><p class="font-extrabold">14:20:15 紧急预警智能体判定二级</p><p class="text-[#8492A6]">结合近 7 天基线判定为二级预警，启动三重通知。</p></div>
+</li>
+<li class="flex gap-3">
+<span class="w-8 h-8 shrink-0 rounded-full bg-[#F4F6FA] text-[13px] font-extrabold flex items-center justify-center">4</span>
+<div class="text-[14px] leading-6"><p class="font-extrabold">14:20:30 陪伴智能体语音引导复测</p><p class="text-[#8492A6]">“奶奶先坐下歇会儿，咱们再量一次。”老人配合完成复测。</p></div>
+</li>
+<li class="flex gap-3">
+<span class="w-8 h-8 shrink-0 rounded-full bg-[#E6F6F3] text-[13px] font-extrabold text-[#0B7C70] flex items-center justify-center">5</span>
+<div class="text-[14px] leading-6"><p class="font-extrabold">14:26:10 复测正常，预警解除</p><p class="text-[#8492A6]">136/84 mmHg，建议继续观察 2 小时，已同步给你。</p></div>
+</li>
+</ol>
+</section>
+<section class="card p-4">
+<h2 class="text-[16px] font-extrabold">你可以这样处理</h2>
+<div class="mt-3 grid grid-cols-1 gap-2">
+<button class="min-h-[52px] rounded-2xl bg-[#0E9F8E] text-white text-[16px] font-extrabold" id="callBackBtn">给妈妈打个电话</button>
+<button class="min-h-[52px] rounded-2xl bg-[#F4F6FA] text-[#14202E] text-[16px] font-extrabold" id="doctorBtn">通知社区医生 王医生</button>
+<button class="min-h-[52px] rounded-2xl bg-[#F4F6FA] text-[#14202E] text-[16px] font-extrabold" id="doneBtn">标记为已处理</button>
+</div>
+<p class="hidden mt-3 rounded-2xl bg-[#E6F6F3] px-3 py-2.5 text-[13px] font-bold text-[#0B7C70]" id="actionState">操作已提交，智能体会在下次异常时同步给你。</p>
+</section>
+<a class="block text-center text-[13px] font-extrabold text-[#0E9F8E] pb-2 min-h-[40px] leading-[40px]" href="family_history.html">查看历史事件与智能体工作记录 →</a>
+</main>
+<nav class="shrink-0 bg-white border-t border-[#E7EBF1] flex items-stretch px-1">
+<a class="tabbtn" href="family_home.html">
+<iconify-icon icon="mdi:view-dashboard"></iconify-icon><span>首页</span>
+</a>
+<a class="tabbtn on" href="family_alert.html">
+<iconify-icon icon="mdi:bell-alert"></iconify-icon><span>预警</span>
+</a>
+<a class="tabbtn" href="family_history.html">
+<iconify-icon icon="mdi:history"></iconify-icon><span>历史</span>
+</a>
+<a class="tabbtn" href="family_care.html">
+<iconify-icon icon="mdi:hand-heart"></iconify-icon><span>关怀</span>
+</a>
+</nav>
+</div>
+<script>
+  var alertChart = echarts.init(document.getElementById('alertChart'));
+  alertChart.setOption({
+    grid: { left: 38, right: 12, top: 18, bottom: 26 },
+    tooltip: {
+      trigger: 'axis',
+      valueFormatter: function (v) { return v + ' mmHg'; }
+    },
+    xAxis: {
+      type: 'category',
+      data: ['0时', '4时', '8时', '12时', '14时', '16时', '20时', '24时'],
+      axisLine: { lineStyle: { color: '#E7EBF1' } },
+      axisLabel: { color: '#8492A6', fontSize: 11 },
+      axisTick: { show: false }
+    },
+    yAxis: {
+      type: 'value',
+      min: 60,
+      max: 170,
+      name: 'mmHg',
+      nameTextStyle: { color: '#8492A6', fontSize: 11 },
+      axisLabel: { color: '#8492A6', fontSize: 11 },
+      splitLine: { lineStyle: { color: '#EEF1F6' } }
+    },
+    series: [
+      {
+        name: '收缩压',
+        type: 'line',
+        smooth: true,
+        symbolSize: 7,
+        data: [126, 122, 128, 132, 148, 136, 130, 127],
+        itemStyle: { color: '#E4611A' },
+        lineStyle: { width: 3 },
+        markPoint: {
+          symbolSize: 46,
+          itemStyle: { color: '#D92D20' },
+          label: { fontSize: 10, color: '#fff' },
+          data: [{ name: '触发预警', coord: ['14时', 148], value: '148' }]
+        }
+      },
+      {
+        name: '舒张压',
+        type: 'line',
+        smooth: true,
+        symbolSize: 7,
+        data: [78, 76, 79, 82, 92, 84, 80, 79],
+        itemStyle: { color: '#0E9F8E' },
+        lineStyle: { width: 3 }
+      }
+    ]
+  });
+  window.addEventListener('resize', function () { alertChart.resize(); });
+
+  var actionState = document.getElementById('actionState');
+  function mark(message, btn) {
+    actionState.textContent = message;
+    actionState.classList.remove('hidden');
+    if (btn) {
+      btn.classList.add('bg-[#E6F6F3]', 'text-[#0B7C70]');
+    }
+  }
+  document.getElementById('callBackBtn').addEventListener('click', function () {
+    mark('正在通过康伴 App 呼叫妈妈…智能体已把预警上下文同步给通话页面。', this);
+  });
+  document.getElementById('doctorBtn').addEventListener('click', function () {
+    mark('已通知社区医生 王医生，预计 10 分钟内回电确认老人的情况。', this);
+  });
+  document.getElementById('doneBtn').addEventListener('click', function () {
+    mark('已标记为已处理，本条预警归档进历史记录。', this);
+  });
+</script>
+</body>
+</html>
